@@ -1,11 +1,12 @@
 Package: traveltimeR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: API Wrapper for the Traveltime Platform API 
 Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Description: API Wrapper for the Traveltime Platform API (https://www.traveltimeplatform.com/).
+      How far can one travel from a certain location within a given timespan? Allows to get traveltime-isochrones for several transport-modes (public transport, car, bicycle, walking, driving & train) via traveltime API.  
+	  API-Key required: (https://www.traveltimeplatform.com/)
+License: MIT
 Encoding: UTF-8
 LazyData: true

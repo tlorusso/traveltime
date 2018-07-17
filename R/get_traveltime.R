@@ -2,37 +2,37 @@
 #'
 #' gets isochrones for traveltimemaps
 #'
-#' @param method2order method to order colors (\code{"hsv"} or \code{"cluster"})
-#' @param cex character expansion for the text
-#' @param mar margin paramaters; vector of length 4 (see \code{\link[graphics]{par}})
-#'
-#' @return None
-#'
-#' @author Karl W Broman, \email{kbroman@@biostat.wisc.edu}
-#' @references \url{http://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors}
-#' @seealso \code{\link{brocolors}}
-#' @keywords hplot
-#'
-#' @examples
-#'
+#' @param appId Traveltime-Plattform Application ID
+#' @param apiKey Traveltime-Plattform API-Key
+#' @param location vector of lat / long coordinates, example: c(47.233,8.234)
+#' @driveTime traveltime (not implemented yet)
+#' @transtype transportation mode (not implemented yet)
+#' @importFrom jsonlite fromJSON
+#' @importFrom httr POST
+#' @importFrom sf st_as_sf
+#' @importFrom purrr map_dfr
 #' @export
-#' @importFrom grDevices rgb2hsv
-#' @importFrom graphics par plot rect text
+#' @rdname get_traveltime
 #'
-
+#' @return the results from the search
+#' @examples
+#' \dontrun{
+#' req <- traveltime_request(appId, apiKey,location,driveTime)
+#' plot(poly)
+#' }
 
 get_traveltime<- function(...){
-  
+
 traveltimelist <-traveltime_request(...)
 
 
-ttlist2 <-traveltimelist %>% 
-  split(.$group) 
+ttlist2 <-traveltimelist %>%
+  split(.$group)
 
-listnew <- ttlist2%>% 
-  map(~make_polygon(.)) 
+listnew <- ttlist2%>%
+  map(~make_polygon(.))
 
 do.call(rbind,listnew)
 
-  
+
 }
