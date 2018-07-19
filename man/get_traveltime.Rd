@@ -4,7 +4,7 @@
 \alias{get_traveltime}
 \title{API Wraper for the Traveltime API}
 \usage{
-get_traveltime(...)
+get_traveltime(..., as.spatial = FALSE)
 }
 \arguments{
 \item{appId}{Traveltime-Plattform Application ID}
