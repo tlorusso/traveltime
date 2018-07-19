@@ -36,7 +36,6 @@ listnew <- ttlist2%>%
   map(~make_polygon(.))
 
 
-
 if(as.spatial==FALSE){
 
 do.call(rbind,listnew)
