@@ -1,15 +1,15 @@
-traveltime_request <- function(appId, apiKey, location, traveltime, type="public_transport", departure){devtools::document()
+traveltime_request <- function(appId, apiKey, location, traveltime, type, departure){devtools::document()
 
   url <- "http://api.traveltimeapp.com/v4/time-map"
 
 
   requestBody <- paste0('{
                         "departure_searches" : [
-                        {"id" : "request",
+                        {"id" : "Zurich",
                         "coords": {"lat":', location[1], ', "lng":', location[2],' },
-                        "transportation" : {"type" : "',type,'"} ,
+                        "transportation" : {"type" : "public_transport"} ,
                         "travel_time" : ', traveltime, ',
-                        "departure_time" : ', departure,'
+                        "departure_time" : "', departure,'"
                         }
                         ] }')
 
@@ -24,7 +24,7 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type="public
 
   res2 <- jsonlite::fromJSON(as.character(response))
 
-  if(res2$errorcode==16) stop(paste0(res2$description))
+  # if(res2$errorcode==16) stop("ERRRROOOR")
 
   # the shapes list contains all the polygons
   flat <- res2$results$shapes[[1]]$shell %>%

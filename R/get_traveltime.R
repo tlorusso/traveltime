@@ -33,18 +33,19 @@ ttlist2 <-traveltimelist %>%
   split(.$group)
 
 listnew <- ttlist2%>%
-  map(~make_polygon(.))
+  purrr::map(~make_polygon(.))
 
 
-if(as.spatial==FALSE){
+# if(as.spatial){
+
+# do.call(rbind,listnew) %>%
+#   as_Spatial()
+#
+# }else{
 
 do.call(rbind,listnew)
 
-}else{
-
-do.call(rbind,listnew) %>%
-    as_Spatial()
-}
+# }
 
 
 }
