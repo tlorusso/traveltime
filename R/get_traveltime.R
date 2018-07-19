@@ -28,12 +28,14 @@ get_traveltime<- function(..., as.spatial=FALSE){
 
 traveltimelist <-traveltime_request(...)
 
-
 ttlist2 <-traveltimelist %>%
   split(.$group)
 
+
 listnew <- ttlist2%>%
-  purrr::map(~make_polygon(.))
+  purrr::map(~make_polygons(.))
+
+# sf_points<- ttlist2
 
 
 # if(as.spatial){
