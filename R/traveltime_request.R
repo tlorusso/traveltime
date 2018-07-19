@@ -9,7 +9,7 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type="public
                         "coords": {"lat":', location[1], ', "lng":', location[2],' },
                         "transportation" : {"type" : "',type,'"} ,
                         "travel_time" : ', traveltime, ',
-                        "departure_time" : "', departure,'"
+                        "departure_time" : ', departure,'
                         }
                         ] }')
 
