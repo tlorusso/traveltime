@@ -1,3 +1,7 @@
+#' API Wraper for the Traveltime API
+#'
+#' gets isochrones for traveltimemaps from Traveltime API
+
 make_polygons <- function(sf_points){
 
 sfp %>%
