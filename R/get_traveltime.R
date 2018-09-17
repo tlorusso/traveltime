@@ -31,7 +31,6 @@ traveltimelist <-traveltime_request(...)
 ttlist2 <-traveltimelist %>%
   split(.$group)
 
-
 listnew <- ttlist2%>%
   purrr::map(~make_polygons(.))
 
