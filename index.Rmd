@@ -9,7 +9,7 @@ output:
     df_print: paged
 ---
 
-Gets isochrones for traveltimemaps from Traveltime API. Supports several modes of transport.
+Gets isochrones for traveltimemaps from Traveltime API directly into R. The isochrones display how far you can travel from a certain location within a given timeframe. Supports several modes of transport. 
 
 __GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-keys/
 
@@ -46,6 +46,7 @@ traveltime30 <- get_traveltime(appId="XXXXXXX",
 traveltime30 <- readRDS("traveltime30.RDS")
 ```
 
+How far you can go from Zurich Mainstation by public transport within 30min visualized with the mapview-package.
 ```{r}
 mapview(traveltime30)
 ```
