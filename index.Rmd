@@ -1,0 +1,52 @@
+---
+title: "traveltimeR - API Wraper for the Traveltime API"
+output: 
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+    toc: true 
+    number_sections: true 
+    df_print: paged
+---
+
+Gets isochrones for traveltimemaps from Traveltime API. Supports several modes of transport.
+
+__GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-keys/
+
+https://api.traveltimeapp.com/
+
+```{r, message=F, warning=F}
+devtools::install_github("tlorusso/traveltimeR")
+
+# load packages
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(dplyr, purrr, sf, mapview, traveltimeR)
+
+```
+
+You can easily retrieve the isochrones with the get_traveltime function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
+
+```{r, echo=TRUE, eval=FALSE}
+# retrieve data via request 
+
+# The following transport modes are supported:
+
+# "cycling"", "cycling_ferry", "driving", "driving+train", "driving_ferry", "public_transport", 
+# "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
+
+traveltime30 <- get_traveltime(appId="XXXXXXX",
+               apiKey="XXXXXXXX",
+               location=c(47.378610,8.54000),
+               traveltime=1800,
+               type="public_transport",
+               departure="2018-10-05T08:00:00Z")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+traveltime30 <- readRDS("traveltime30.RDS")
+```
+
+```{r}
+mapview(traveltime30)
+```
+

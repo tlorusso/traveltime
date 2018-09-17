@@ -19,10 +19,14 @@
 #' @return the results from the search
 #' @family get_traveltime functions
 #' @examples
-#' \dontrun{
-#' req <- traveltime_request(appId, apiKey,location=c(47.378610,8.54000),traveltime=1800,departure="2018-08-05T08:00:00Z")
-#' plot(poly)
-#' }
+#' traveltime30 <- get_traveltime(appId="XXXXXXX",
+#' apiKey="XXXXXXXX",
+#' location=c(47.378610,8.54000),
+#' traveltime=1800,
+#' type="public_transport",
+#' departure="2018-10-05T08:00:00Z")
+#' plot(traveltime30)
+#'
 
 get_traveltime<- function(..., as.spatial=FALSE){
 
