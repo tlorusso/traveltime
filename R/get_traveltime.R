@@ -1,6 +1,6 @@
 #' API Wraper for the Traveltime API
 #'
-#' gets isochrones for traveltimemaps
+#' gets isochrones for traveltimemaps from Traveltime API
 #'
 #' @param appId Traveltime-Plattform Application ID
 #' @param apiKey Traveltime-Plattform API-Key
