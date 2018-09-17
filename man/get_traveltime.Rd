@@ -17,7 +17,7 @@ get_traveltime(..., as.spatial = FALSE)
 the results from the search
 }
 \description{
-gets isochrones for traveltimemaps
+gets isochrones for traveltimemaps from Traveltime API
 }
 \examples{
 \dontrun{

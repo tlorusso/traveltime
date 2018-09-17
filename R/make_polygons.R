@@ -4,7 +4,7 @@
 
 make_polygons <- function(sf_points){
 
-sfp %>%
+sf_points %>%
     mutate(ID=row_number()) %>%
     group_by(group) %>%
     arrange(ID) %>%
