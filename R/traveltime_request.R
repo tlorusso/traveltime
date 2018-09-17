@@ -35,7 +35,7 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
   # Reduce(rbind, res2$results$shapes[[1]]$shell)
 
   sf::st_as_sf(x = flat,
-                      coords = c("lat", "lng"),
+                      coords = c("lng", "lat"),
                       crs = "+proj=longlat +datum=WGS84")
 
 
