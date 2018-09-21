@@ -1,5 +1,5 @@
 ---
-title: "traveltimeR - API Wraper for the Traveltime API"
+title: "traveltimeR - API Wrapper for the Traveltime API"
 output: 
   prettydoc::html_pretty:
     theme: cayman
@@ -34,20 +34,41 @@ You can easily retrieve the isochrones with the get_traveltime function. Find a 
 # "cycling"", "cycling_ferry", "driving", "driving+train", "driving_ferry", "public_transport", 
 # "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
 
-traveltime30 <- get_traveltime(appId="XXXXXXX",
-               apiKey="XXXXXXXX",
+traveltime30 <- get_traveltime(appId="YourappId",
+               apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
                traveltime=1800,
                type="public_transport",
                departure="2018-10-05T08:00:00Z")
+
+traveltime60 <- get_traveltime(appId="YourappId",
+               apiKey="YourAPIKey",
+               location=c(47.378610,8.54000),
+               traveltime=3600,
+               type="public_transport",
+               departure="2018-10-05T08:00:00Z")
+
 ```
 
 ```{r, echo=FALSE, eval=TRUE}
 traveltime30 <- readRDS("traveltime30.RDS")
+traveltime60 <- readRDS("traveltime60.RDS")
+
 ```
 
 How far you can go from Zurich Mainstation by public transport within 30min visualized with the mapview-package.
 ```{r}
 mapview(traveltime30)
+```
+
+
+```{r}
+# library(ggplot2)
+# 
+# ggplot()+
+#   geom_sf(traveltime30)+
+#   geom_sf(traveltime60)
+
+
 ```
 

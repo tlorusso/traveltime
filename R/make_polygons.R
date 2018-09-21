@@ -1,4 +1,4 @@
-#' API Wraper for the Traveltime API
+#' API Wrapper for the Traveltime API
 #'
 #' gets isochrones for traveltimemaps from Traveltime API
 

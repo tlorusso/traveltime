@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_traveltime.R
 \name{get_traveltime}
 \alias{get_traveltime}
-\title{API Wraper for the Traveltime API}
+\title{API Wrapper for the Traveltime API}
 \usage{
 get_traveltime(..., as.spatial = FALSE)
 }
@@ -17,15 +17,24 @@ get_traveltime(..., as.spatial = FALSE)
 the results from the search
 }
 \description{
-gets isochrones for traveltimemaps from Traveltime API
+\code{get_traveltime} is the main function of the traveltimeR package. It requests traveltime-isochrones from the traveltime platform, which supports several modes of transport in several countries.
+}
+\details{
+get traveltime - isochrones for traveltimemaps from Traveltime API
+
+To call the API via the package you need to get an api-key here \url{http://docs.traveltimeplatform.com/overview/getting-keys/}.
+         If you're not using the API for commercial use users can get 10,000 free API queries a month.
 }
 \examples{
-traveltime30 <- get_traveltime(appId="XXXXXXX",
-apiKey="XXXXXXXX",
+traveltime30 <- get_traveltime(appId="yourAppID",
+apiKey="yourApiKey",
 location=c(47.378610,8.54000),
 traveltime=1800,
 type="public_transport",
 departure="2018-10-05T08:00:00Z")
 plot(traveltime30)
 
+}
+\references{
+\href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 }
