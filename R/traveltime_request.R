@@ -5,7 +5,7 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
 
   requestBody <- paste0('{
                         "departure_searches" : [
-                        {"id" : "Zurich",
+                        {"id" : "request",
                         "coords": {"lat":', location[1], ', "lng":', location[2],' },
                         "transportation" : {"type" : "public_transport"} ,
                         "travel_time" : ', traveltime, ',
@@ -24,15 +24,12 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
 
   res2 <- jsonlite::fromJSON(as.character(response))
 
-  # if(res2$errorcode==16) stop("ERRRROOOR")
+  # check for errors
+  if (res2$errorcode) stop("error: API status code ", res2$errorcode, call. = FALSE)
 
   # the shapes list contains all the polygons
   flat <- res2$results$shapes[[1]]$shell %>%
     purrr::map_dfr(bind_cols,.id="group")
-
-   #keine names, daher suboptima
-  # do.call(rbind,res2$results$shapes[[1]]$shell)
-  # Reduce(rbind, res2$results$shapes[[1]]$shell)
 
   sf::st_as_sf(x = flat,
                       coords = c("lng", "lat"),
