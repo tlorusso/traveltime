@@ -1,3 +1,7 @@
+#' API Wrapper for the Traveltime API - helper function
+#'
+#' traveltime_request calls the api and converts the response to an sf object
+
 traveltime_request <- function(appId, apiKey, location, traveltime, type, departure){devtools::document()
 
   url <- "http://api.traveltimeapp.com/v4/time-map"

@@ -1,6 +1,6 @@
-#' API Wrapper for the Traveltime API
+#' API Wrapper for the Traveltime API - helper function
 #'
-#' gets isochrones for traveltimemaps from Traveltime API
+#' make_polygons converts grouped points to polygons
 
 make_polygons <- function(sf_points){
 
