@@ -1,5 +1,4 @@
-### traveltimeR - API Wrapper for the Traveltime API
-
+## traveltimeR - API Wrapper for the Traveltime API
 
 An API Wrapper to get isochrones from the Traveltime API directly into R. Supports several modes of transport. The isochrones display how far you can travel from a certain location within a given timeframe. You need an API-Key for the Traveltime-Platform to use the package.
 
@@ -42,4 +41,3 @@ traveltime30 <- get_traveltime(appId="YourAppId",
                departure="2018-10-05T08:00:00Z")
 
 ```
-
