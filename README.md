@@ -7,6 +7,6 @@ __GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-key
 
 https://api.traveltimeapp.com/
 
-An example of how to use the package can be found here: http://tlorusso.github.io/traveltimeR
+An example of how to use the package can be found here: https://tlorusso.github.io/traveltimeR/vignette.html
 
 
