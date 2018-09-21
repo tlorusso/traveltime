@@ -27,13 +27,14 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
   # check for errors
   if (res2$errorcode) stop("error: API status code ", res2$errorcode, call. = FALSE)
 
-  # the shapes list contains all the polygons
+  # the shapes list contains all the polygons - convert to data.frame
   flat <- res2$results$shapes[[1]]$shell %>%
     purrr::map_dfr(bind_cols,.id="group")
 
+  #convert to sf
   sf::st_as_sf(x = flat,
-                      coords = c("lng", "lat"),
-                      crs = "+proj=longlat +datum=WGS84")
+                 coords = c("lng", "lat"),
+                crs = "+proj=longlat +datum=WGS84")
 
 
 }
