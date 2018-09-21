@@ -23,7 +23,7 @@ pacman::p_load(dplyr, purrr, sf, mapview, traveltimeR)
 You can easily retrieve the isochrones with the get_traveltime function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
 
 
-# querying the Traveltime-API with get_traveltime
+### querying the Traveltime-API with get_traveltime
 
 ```
 # retrieve isochrones via request 
