@@ -11,9 +11,12 @@ output:
 
 Gets isochrones for traveltimemaps from Traveltime API directly into R. The isochrones display how far you can travel from a certain location within a given timeframe. Supports several modes of transport. 
 
+https://api.traveltimeapp.com/
+
 __GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-keys/
 
-https://api.traveltimeapp.com/
+For non-commercial use the usage of the API is free up to 10'000 queries a month (max 30 queries per min). For commercial use (e.g. to integrate the API into a website) a license is needed. 
+
 
 ```{r, message=F, warning=F}
 devtools::install_github("tlorusso/traveltimeR")
@@ -26,6 +29,7 @@ pacman::p_load(dplyr, purrr, sf, mapview, traveltimeR)
 
 You can easily retrieve the isochrones with the get_traveltime function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
 
+# querying the Traveltime-API with get_traveltime
 ```{r, echo=TRUE, eval=FALSE}
 # retrieve data via request 
 
@@ -34,6 +38,7 @@ You can easily retrieve the isochrones with the get_traveltime function. Find a 
 # "cycling"", "cycling_ferry", "driving", "driving+train", "driving_ferry", "public_transport", 
 # "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
 
+# how far can you go by public transport within 30 minutes?
 traveltime30 <- get_traveltime(appId="YourappId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
@@ -41,6 +46,7 @@ traveltime30 <- get_traveltime(appId="YourappId",
                type="public_transport",
                departure="2018-10-05T08:00:00Z")
 
+# ... and within 60 minutes?
 traveltime60 <- get_traveltime(appId="YourappId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
@@ -57,18 +63,25 @@ traveltime60 <- readRDS("traveltime60.RDS")
 ```
 
 How far you can go from Zurich Mainstation by public transport within 30min visualized with the mapview-package.
+
+# taking a glimpse at the isochrones with mapview
 ```{r}
 mapview(traveltime30)
 ```
 
+# plot a traveltime-map with ggmap / geom_sf
+```{r, warning=F, message=F}
 
-```{r}
-# library(ggplot2)
-# 
-# ggplot()+
-#   geom_sf(traveltime30)+
-#   geom_sf(traveltime60)
+library(ggmap)
 
+basemap = get_map(location = unname(st_bbox(traveltime60)),source = "google")
 
+ggmap(basemap)+
+   geom_sf(data=traveltime60,inherit.aes = FALSE, fill="SteelBlue", alpha=0.5, color=F)+
+  geom_sf(data=traveltime30,inherit.aes = FALSE, fill="DarkBlue",alpha=0.5,color=F)+
+  labs(title="Traveltime-Map",
+       subtitle="how far can you go by public transport in 30 / 60 min?")+
+  theme_void()
+  
 ```
 
