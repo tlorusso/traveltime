@@ -34,7 +34,7 @@
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 #' @export
 
-get_traveltime<- function(..., as.spatial=FALSE){
+get_traveltime<- function(...){
 
 traveltimelist <-traveltime_request(...)
 
