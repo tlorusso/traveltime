@@ -4,7 +4,7 @@
 \alias{get_traveltime}
 \title{API Wrapper for the Traveltime API}
 \usage{
-get_traveltime(..., as.spatial = FALSE)
+get_traveltime(...)
 }
 \arguments{
 \item{appId}{Traveltime-Plattform Application ID}
@@ -12,6 +12,12 @@ get_traveltime(..., as.spatial = FALSE)
 \item{apiKey}{Traveltime-Plattform API-Key}
 
 \item{location}{vector of lat / long coordinates, example: c(47.233,8.234)}
+
+\item{traveltime}{traveltime in seconds}
+
+\item{type}{transportation mode}
+
+\item{departure}{time of departure, format: "2018-08-05T08:00:00Z"}
 }
 \value{
 the results from the search
