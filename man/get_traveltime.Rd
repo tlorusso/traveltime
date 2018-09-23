@@ -29,7 +29,7 @@ the results from the search
 get_traveltime - retrieve isochrones for traveltimemaps from Traveltime API
 
 To call the API via the package you need to get an api-key here \url{http://docs.traveltimeplatform.com/overview/getting-keys/}.
-         If you're not using the API for commercial use users can get 10,000 free API queries a month.
+         If you're not using the API for commercial use users can get 10,000 free API queries a month. The following transport modes are supported (type):
 }
 \examples{
 traveltime30 <- get_traveltime(appId="yourAppID",
