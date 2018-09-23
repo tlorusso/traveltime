@@ -26,11 +26,11 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
                      encode = "json")
 
 
+  if (http_type(resp) != "application/json") {
+    stop("API did not return json", call. = FALSE)
+  }
+
   res2 <- jsonlite::fromJSON(as.character(response))
-
-
-  # check for errors
-  # if (res2$errorcode) stop("error: API status code ", res2$errorcode, call. = FALSE)
 
   # the shapes list contains all the polygons - convert to data.frame
   flat <- res2$results$shapes[[1]]$shell %>%
