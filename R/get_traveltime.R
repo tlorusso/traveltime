@@ -7,9 +7,9 @@
 #' @param appId Traveltime-Plattform Application ID
 #' @param apiKey Traveltime-Plattform API-Key
 #' @param location vector of lat / long coordinates, example: c(47.233,8.234)
-#' @traveltime traveltime in seconds
-#' @type transportation mode
-#' @departure time of departure, format: "2018-08-05T08:00:00Z"
+#' @param traveltime traveltime in seconds
+#' @param type transportation mode
+#' @param departure time of departure, format: "2018-08-05T08:00:00Z"
 #' @importFrom jsonlite fromJSON
 #' @importFrom httr POST
 #' @importFrom sf st_as_sf

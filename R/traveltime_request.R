@@ -26,7 +26,7 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
                      encode = "json")
 
 
-  if (http_type(resp) != "application/json") {
+  if (httr::http_type(response) != "application/json") {
     stop("API did not return json", call. = FALSE)
   }
 
@@ -35,6 +35,10 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
   # the shapes list contains all the polygons - convert to data.frame
   flat <- res2$results$shapes[[1]]$shell %>%
     purrr::map_dfr(bind_cols,.id="group")
+
+  if (ncol(flat)!=3) {
+    stop("request did not deliver isochrone coordinates - please check appId / apiKey and if the coordinates lie in a supported country.", call. = FALSE)
+  }
 
   #convert to sf
   sf::st_as_sf(x = flat,
