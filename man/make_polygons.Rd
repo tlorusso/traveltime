@@ -2,10 +2,10 @@
 % Please edit documentation in R/make_polygons.R
 \name{make_polygons}
 \alias{make_polygons}
-\title{API Wrapper for the Traveltime API}
+\title{API Wrapper for the Traveltime API - helper function}
 \usage{
 make_polygons(sf_points)
 }
 \description{
-gets isochrones for traveltimemaps from Traveltime API
+make_polygons converts grouped points to polygons
 }

@@ -1,6 +1,6 @@
 ## traveltimeR - API Wrapper for the Traveltime API
 
-An API Wrapper to get isochrones from the Traveltime API directly into R. Supports several modes of transport. The isochrones display how far you can travel from a certain location within a given timeframe. You need an API-Key for the Traveltime-Platform to use the package.
+An API Wrapper to get isochrones from the Traveltime API directly into R as an sf-object. Supports several modes of transport. The isochrones display how far you can travel from a certain location within a given timeframe. You need an API-Key for the Traveltime-Platform to use the package.
 
 https://api.traveltimeapp.com/
 
