@@ -2,7 +2,7 @@
 #'
 #' traveltime_request calls the api and converts the response to an sf object
 
-traveltime_request <- function(appId, apiKey, location, traveltime, type, departure){devtools::document()
+traveltime_request <- function(appId, apiKey, location, traveltime, type, departure){
 
   url <- "http://api.traveltimeapp.com/v4/time-map"
 
