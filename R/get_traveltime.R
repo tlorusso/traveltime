@@ -38,11 +38,12 @@ get_traveltime<- function(..., as.spatial=FALSE){
 
 traveltimelist <-traveltime_request(...)
 
-ttlist2 <-traveltimelist %>%
+splitlist <-traveltimelist %>%
   split(.$group)
 
-listnew <- ttlist2%>%
-  purrr::map_dfr(~make_polygons(.))
+polygonslist <- splitlist %>%
+  purrr::map(~make_polygons(.))
 
+do.call(rbind, polygonslist)
 
 }
