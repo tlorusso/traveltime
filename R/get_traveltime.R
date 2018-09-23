@@ -2,7 +2,7 @@
 #'
 #' \code{get_traveltime} is the main function of the traveltimeR package. It retrieves traveltime-isochrones from the traveltime platform, which supports several modes of transport in several countries and brings them into r as polygons stored in sf-objects.
 #'
-#'   get traveltime - isochrones for traveltimemaps from Traveltime API
+#'   get_traveltime - retrieve isochrones for traveltimemaps from Traveltime API
 #'
 #' @param appId Traveltime-Plattform Application ID
 #' @param apiKey Traveltime-Plattform API-Key
@@ -29,6 +29,8 @@
 #' traveltime=1800,
 #' type="public_transport",
 #' departure="2018-10-05T08:00:00Z")
+#'
+#' #plot the isochrones
 #' plot(traveltime30)
 #'
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
