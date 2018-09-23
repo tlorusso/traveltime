@@ -42,7 +42,7 @@ ttlist2 <-traveltimelist %>%
   split(.$group)
 
 listnew <- ttlist2%>%
-  purrr::map(~make_polygons(.))
+  purrr::map_dfr(~make_polygons(.))
 
 
 }
