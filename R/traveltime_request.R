@@ -11,7 +11,7 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
                         "departure_searches" : [
                         {"id" : "request",
                         "coords": {"lat":', location[1], ', "lng":', location[2],' },
-                        "transportation" : {"type" :',type, '} ,
+                        "transportation" : {"type" : ',type,'} ,
                         "travel_time" : ', traveltime, ',
                         "departure_time" : "', departure,'"
                         }
