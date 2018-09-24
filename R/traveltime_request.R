@@ -1,6 +1,8 @@
 #' API Wrapper for the Traveltime API - helper function
 #'
 #' traveltime_request calls the api and converts the response to an sf object
+#'
+#' @noRd
 
 traveltime_request <- function(appId, apiKey, location, traveltime, type, departure){
 
@@ -11,7 +13,7 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
                         "departure_searches" : [
                         {"id" : "request",
                         "coords": {"lat":', location[1], ', "lng":', location[2],' },
-                        "transportation" : {"type" : ',type,'} ,
+                        "transportation" : {"type" : "',type,'"} ,
                         "travel_time" : ', traveltime, ',
                         "departure_time" : "', departure,'"
                         }
@@ -32,18 +34,19 @@ traveltime_request <- function(appId, apiKey, location, traveltime, type, depart
 
   res2 <- jsonlite::fromJSON(as.character(response))
 
+
   # the shapes list contains all the polygons - convert to data.frame
   flat <- res2$results$shapes[[1]]$shell %>%
     purrr::map_dfr(bind_cols,.id="group")
 
   if (ncol(flat)!=3) {
-    stop("request did not deliver isochrone coordinates - please check appId / apiKey and if the coordinates lie in a supported country.", call. = FALSE)
+    stop("request did not deliver isochrone coordinates - please check appId / apiKey and / or if the coordinates lie in a supported country.", call. = FALSE)
   }
 
-  #convert to sf
+  #convert to sf object
   sf::st_as_sf(x = flat,
                  coords = c("lng", "lat"),
-                crs = "+proj=longlat +datum=WGS84")
+                 crs = "+proj=longlat +datum=WGS84")
 
 
 }

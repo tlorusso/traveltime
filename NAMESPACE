@@ -2,7 +2,9 @@
 
 export(get_traveltime)
 importFrom(dplyr,"%>%")
+importFrom(dplyr,bind_cols)
 importFrom(httr,POST)
 importFrom(jsonlite,fromJSON)
 importFrom(purrr,map_dfr)
 importFrom(sf,st_as_sf)
+importFrom(sf,st_cast)
