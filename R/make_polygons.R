@@ -10,7 +10,8 @@ sf_points %>%
     dplyr::group_by(group) %>%
     dplyr::arrange(ID) %>%
     dplyr::summarize(INT = first(ID), do_union = FALSE) %>%
-    sf::st_cast("POLYGON")
+    sf::st_cast("POLYGON") %>%
+    dplyr::select(-INT,-do_union)
 
 }
 
