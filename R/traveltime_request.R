@@ -2,6 +2,7 @@
 #'
 #' traveltime_request calls the api and converts the response to an sf object
 #'
+#' @importFrom httr POST
 #' @noRd
 
 traveltime_request <- function(appId, apiKey, location, traveltime, type, departure){
