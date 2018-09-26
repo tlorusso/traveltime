@@ -5,7 +5,15 @@
 #' @importFrom httr POST
 #' @noRd
 
-traveltime_request <- function(appId, apiKey, location, traveltime, type, departure){
+traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL){
+
+  #checks : missing parameters?
+  if (length(location)!=2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
+  if (is.null(traveltime)) stop("traveltime missing - set traveltime (in seconds)", call. = FALSE)
+  if (is.null(apiKey)) stop("apiKey is missing.", call. = FALSE)
+  if (is.null(appId)) stop("appId is missing.", call. = FALSE)
+  if (is.null(type)) stop("transport mode not defined - please choose a mode of transport", call. = FALSE)
+
 
   url <- "http://api.traveltimeapp.com/v4/time-map"
 
