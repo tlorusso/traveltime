@@ -72,7 +72,7 @@ How far you can go from Zurich Mainstation by public transport within 30min visu
 # mapview(traveltime, zcol="traveltime",burst = TRUE)
 
 
-m1 = mapview(traveltime60,  col.regions = c("snow"))
+m1 = mapview(traveltime60,  col.regions = c("#000004FF"))
 m1 + traveltime30
 
 
