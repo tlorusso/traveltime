@@ -46,6 +46,7 @@ splitlist <-traveltimelist %>%
 polygonslist <- splitlist %>%
   purrr::map(~make_polygons(.))
 
-do.call(rbind, polygonslist)
+do.call(rbind, polygonslist) %>%
+  mutate(traveltime=traveltime)
 
 }

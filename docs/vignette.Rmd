@@ -60,28 +60,35 @@ traveltime60 <- get_traveltime(appId="YourappId",
 traveltime30 <- readRDS("traveltime30.RDS")
 traveltime60 <- readRDS("traveltime60.RDS")
 
+# traveltime <- readRDS("~/github/traveltimeR/traveltime.RDS")
+
 ```
 
 How far you can go from Zurich Mainstation by public transport within 30min visualized with the mapview-package.
 
 # taking a glimpse at the isochrones with mapview
 ```{r}
-mapview(traveltime30)
+
+# mapview(traveltime, zcol="traveltime",burst = TRUE)
+
+
+m1 = mapview(traveltime60,  col.regions = c("snow"))
+m1 + traveltime30
+
+
 ```
+
 
 # plot a traveltime-map with ggmap / geom_sf
 ```{r, warning=F, message=F}
-
 library(ggmap)
 
-basemap = get_map(location = unname(st_bbox(traveltime60)),source = "google")
+basemap2 <- get_stamenmap(bbox = unname(st_bbox(traveltime60)),maptype = "toner-hybrid")
 
-ggmap(basemap)+
-   geom_sf(data=traveltime60,inherit.aes = FALSE, fill="SteelBlue", alpha=0.5, color=F)+
-  geom_sf(data=traveltime30,inherit.aes = FALSE, fill="DarkBlue",alpha=0.5,color=F)+
-  labs(title="Traveltime-Map",
-       subtitle="how far can you go by public transport in 30 / 60 min?")+
-  theme_void()
+ggmap(basemap2)+
+   geom_sf(data=traveltime60,inherit.aes = FALSE, fill="#000004FF", alpha=0.5, color=F)+
+  geom_sf(data=traveltime30,inherit.aes = FALSE, fill="#FCFFA4FF",alpha=0.5,color=F)+
+  theme_void()+
+  coord_sf(datum = NA)
   
 ```
-
