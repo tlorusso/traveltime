@@ -72,7 +72,7 @@ How far you can go from Zurich Mainstation by public transport within 30min visu
 # mapview(traveltime, zcol="traveltime",burst = TRUE)
 
 
-m1 = mapview(traveltime60,  col.regions = c("#000004FF"))
+m1 = mapview(traveltime60,  col.regions = c("grey"))
 m1 + traveltime30
 
 
@@ -86,8 +86,8 @@ library(ggmap)
 basemap2 <- get_stamenmap(bbox = unname(st_bbox(traveltime60)),maptype = "toner-hybrid")
 
 ggmap(basemap2)+
-   geom_sf(data=traveltime60,inherit.aes = FALSE, fill="#000004FF", alpha=0.5, color=F)+
-  geom_sf(data=traveltime30,inherit.aes = FALSE, fill="#FCFFA4FF",alpha=0.5,color=F)+
+   geom_sf(data=traveltime60,inherit.aes = FALSE, fill="grey", alpha=0.5, color=F)+
+  geom_sf(data=traveltime30,inherit.aes = FALSE, fill="darkslategrey",alpha=0.5,color=F)+
   theme_void()+
   coord_sf(datum = NA)
   
