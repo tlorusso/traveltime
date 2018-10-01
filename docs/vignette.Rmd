@@ -9,7 +9,7 @@ output:
     df_print: paged
 ---
 
-Gets isochrones for traveltimemaps from Traveltime API directly into R. The isochrones display how far you can travel from a certain location within a given timeframe. Supports several modes of transport. 
+Gets isochrones for traveltimemaps from Traveltime API directly into R as sf-objects. The isochrones display how far you can travel from a certain location within a given timeframe. Supports several modes of transport. 
 
 https://api.traveltimeapp.com/
 
@@ -60,8 +60,7 @@ traveltime60 <- get_traveltime(appId="YourappId",
 traveltime30 <- readRDS("traveltime30.RDS")
 traveltime60 <- readRDS("traveltime60.RDS")
 
-# traveltime <- readRDS("~/github/traveltimeR/traveltime.RDS")
-
+traveltimes <- readRDS("~/github/traveltimeR/traveltimes.RDS")
 ```
 
 How far you can go from Zurich Mainstation by public transport within 30min visualized with the mapview-package.
@@ -80,15 +79,41 @@ m1 + traveltime30
 
 
 # plot a traveltime-map with ggmap / geom_sf
-```{r, warning=F, message=F}
+```{r, warning=F, message=F, eval=FALSE}
+
 library(ggmap)
 
 basemap2 <- get_stamenmap(bbox = unname(st_bbox(traveltime60)),maptype = "toner-hybrid")
 
+traveltimes <-c(1800,2400,3600) %>% 
+              map(.,~get_traveltime(appId="YourAppId",
+                    apiKey="YourApiKey",
+                    location=c(47.378610,8.54000),
+                    traveltime=.x,
+                    type="public_transport",
+                    departure="2018-10-05T08:00:00Z"))
+
+
+#map_dfr does not work properly with the resulting sf objects (sfc_polygons)
+traveltimes <- do.call(rbind,traveltimes)
+```
+
+
+```{r, warning=F, message=F}
+
+library(ggmap)
+
+#get basemap with ggmap
+basemap2 <- get_stamenmap(bbox = unname(st_bbox(traveltimes)),maptype = "toner-hybrid")
+
+#plot
 ggmap(basemap2)+
-   geom_sf(data=traveltime60,inherit.aes = FALSE, fill="grey", alpha=0.5, color=F)+
-  geom_sf(data=traveltime30,inherit.aes = FALSE, fill="darkslategrey",alpha=0.5,color=F)+
+  geom_sf(data=traveltimes,aes(fill=as.factor(traveltime/60)),inherit.aes = FALSE, colour=NA, alpha=0.4)+
   theme_void()+
-  coord_sf(datum = NA)
+  coord_sf(datum = NA)+
+  scale_fill_viridis_d(name="min")
+
   
 ```
+
+
