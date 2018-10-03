@@ -29,7 +29,7 @@ pacman::p_load(dplyr, purrr, sf, mapview, traveltimeR)
 
 You can easily retrieve the isochrones with the get_traveltime function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
 
-# querying the Traveltime-API with get_traveltime
+# Querying the Traveltime-API with get_traveltime
 ```{r, echo=TRUE, eval=FALSE}
 # retrieve data via request 
 
@@ -59,14 +59,13 @@ traveltime60 <- get_traveltime(appId="YourappId",
 ```{r, echo=FALSE, eval=TRUE}
 traveltime30 <- readRDS("traveltime30.RDS")
 traveltime60 <- readRDS("traveltime60.RDS")
-
-traveltimes <- readRDS("~/github/traveltimeR/traveltimes.RDS")
+traveltimes <- readRDS("traveltimes.RDS")
 ```
 
 How far you can go from Zurich Mainstation by public transport within 30min visualized with the mapview-package.
 
-# taking a glimpse at the isochrones with mapview
-```{r}
+# Taking a glimpse at the isochrones (mapview)
+```{r,message=F, warning=F}
 
 # mapview(traveltime, zcol="traveltime",burst = TRUE)
 
@@ -78,7 +77,7 @@ m1 + traveltime30
 ```
 
 
-# plot a traveltime-map with ggmap / geom_sf
+# Plotting a Traveltime-Map (ggmap & ggplot2)
 ```{r, warning=F, message=F, eval=FALSE}
 
 library(ggmap)
@@ -100,7 +99,6 @@ traveltimes <- do.call(rbind,traveltimes)
 
 
 ```{r, warning=F, message=F}
-
 library(ggmap)
 
 #get basemap with ggmap
@@ -115,5 +113,59 @@ ggmap(basemap2)+
 
   
 ```
+
+#Creating an animated Map with gganimate : Rush Hour VS Night Time Drive
+
+How far can you drive within 30min from Zurich at 7AM vs 11PM? An animated map unveils the difference in range impressively.
+
+```{r,message=F, warning=F}
+
+library(gganimate)
+library(traveltimeR)
+library(tidyverse)
+library(transformr)
+
+```
+
+We can call the traveltime-API to get the isochrones for several departure-times. We could do the same for different modes of transport, locations and traveltime. With `purrr::map` we can pass vectors of elements to the `get_traveltime`- function to do so.
+```{r,eval=FALSE}
+allofit <-c("2018-10-05T07:00:00Z","2018-10-05T23:00:00Z") %>%
+  map(.,~get_traveltime(appId="YourAppId",
+                        apiKey="YourApiKey",
+                        location=c(47.378610,8.54000),
+                        traveltime=1800,
+                        type="driving",
+                        departure=.x) %>% mutate(time=.x))
+
+df <-do.call(rbind, allofit)
+
+# create a group variable based on the area of the polygons in order to assure a smooth transformation
+df <- animationdf %>% group_by(as.factor(time))%>% 
+                      mutate(group=dense_rank(st_area(geometry)))
+```
+
+```{r,echo=FALSE, message=F, warning=F}
+animationdf <- readRDS("animation.RDS")
+
+df <- animationdf %>% group_by(as.factor(time))%>% 
+                      mutate(group=dense_rank(st_area(geometry)))
+```
+
+```{r, eval=FALSE}
+#get basemap with ggmap
+basemap2 <- get_stamenmap(bbox = unname(st_bbox(animationdf)),maptype = "toner-hybrid")
+
+#just a few lines to trigger gganimate!
+animation <-ggmap(basemap2)+
+  geom_sf(data = df, aes(group=group,fill=time),inherit.aes = FALSE, alpha=0.4, colour=NA)  +
+  transition_states(time, 2, 1)+
+  scale_fill_viridis_d()
+
+animation
+
+```
+![](traveltime.gif)
+
+
 
 
