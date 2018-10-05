@@ -9,7 +9,7 @@ output:
     df_print: paged
 ---
 
-Gets isochrones for traveltimemaps from Traveltime API directly into R as sf-objects. The isochrones display how far you can travel from a certain location within a given timeframe. Supports several modes of transport. 
+The traveltimeR-package allows to retrieve isochrones for traveltimemaps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
 
 https://api.traveltimeapp.com/
 
@@ -62,9 +62,10 @@ traveltime60 <- readRDS("traveltime60.RDS")
 traveltimes <- readRDS("traveltimes.RDS")
 ```
 
-How far you can go from Zurich Mainstation by public transport within 30min visualized with the mapview-package.
-
 # Taking a glimpse at the isochrones (mapview)
+
+How far you can travel from Zurich Mainstation by public transport within 30 minutes or within an hour? The retrieved isochrones can be visualized with `mapview` to take a first glimpse. 
+
 ```{r,message=F, warning=F}
 
 # mapview(traveltime, zcol="traveltime",burst = TRUE)
@@ -78,6 +79,9 @@ m1 + traveltime30
 
 
 # Plotting a Traveltime-Map (ggmap & ggplot2)
+
+With the latest version of ggplot2, `geom_sf` has been introduced, which allows to plot geodata stored in dataframes with class sf very conveniently.
+
 ```{r, warning=F, message=F, eval=FALSE}
 
 library(ggmap)
@@ -124,10 +128,11 @@ library(gganimate)
 library(traveltimeR)
 library(tidyverse)
 library(transformr)
+library(sf)
 
 ```
 
-We can call the traveltime-API to get the isochrones for several departure-times. We could do the same for different modes of transport, locations and traveltime. With `purrr::map` we can pass vectors of elements to the `get_traveltime`- function to do so.
+We can call the traveltime-API to get the isochrones for several departure-times. We could do the same for different modes of transport, locations and traveltime. With `purrr::map` we can pass vectors of elements to the `get_traveltime`- function to do so. 
 ```{r,eval=FALSE}
 allofit <-c("2018-10-05T07:00:00Z","2018-10-05T23:00:00Z") %>%
   map(.,~get_traveltime(appId="YourAppId",
@@ -151,6 +156,7 @@ df <- animationdf %>% group_by(as.factor(time))%>%
                       mutate(group=dense_rank(st_area(geometry)))
 ```
 
+Just with a few lines of extra code we can turn a static map into an animated one with gganimate!
 ```{r, eval=FALSE}
 #get basemap with ggmap
 basemap2 <- get_stamenmap(bbox = unname(st_bbox(animationdf)),maptype = "toner-hybrid")
@@ -158,10 +164,15 @@ basemap2 <- get_stamenmap(bbox = unname(st_bbox(animationdf)),maptype = "toner-h
 #just a few lines to trigger gganimate!
 animation <-ggmap(basemap2)+
   geom_sf(data = df, aes(group=group,fill=time),inherit.aes = FALSE, alpha=0.4, colour=NA)  +
+  theme_void()+
+  coord_sf(datum = NA)+
   transition_states(time, 2, 1)+
-  scale_fill_viridis_d()
+  scale_fill_viridis_d(name="departure")
 
 animation
+
+#save the animated map as .gif
+# anim_save("traveltime.gif")
 
 ```
 ![](traveltime.gif)
