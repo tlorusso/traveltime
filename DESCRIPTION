@@ -5,8 +5,8 @@ Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: API Wrapper for the Traveltime Platform API (https://www.traveltimeplatform.com/).
-      How far can one travel from a certain location within a given timespan? Allows to get traveltime-isochrones for several transport-modes (public transport, car, bicycle, walking, driving & train) via traveltime API.  
-	  API-Key required: (https://www.traveltimeplatform.com/)
+How far can you travel from a certain location within a given timespan? Allows to get traveltime-isochrones for several transport-modes (public transport, car, bicycle, walking, driving & train) from the traveltime API. The isochrones come into R in form of geometries stored in sf-dataframes. 
+API-Key required: (https://www.traveltimeplatform.com/)
 License: MIT
 Encoding: UTF-8
 LazyData: true
