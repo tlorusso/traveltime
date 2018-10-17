@@ -41,12 +41,14 @@ traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", locat
     stop("API did not return json", call. = FALSE)
   }
 
-  res2 <- jsonlite::fromJSON(as.character(response))
+  # extract content
+  respo <-httr::content(response)
 
 
   # the shapes list contains all the polygons - convert to data.frame
-  flat <- res2$results$shapes[[1]]$shell %>%
-    purrr::map_dfr(bind_cols,.id="group")
+flat <- c(1:length(respo$results[[1]]$shapes)) %>%
+    purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$shell),.id="group")
+
 
   if (ncol(flat)!=3) {
     stop("request did not deliver isochrone coordinates - please check appId / apiKey and / or if the coordinates lie in a supported country.", call. = FALSE)

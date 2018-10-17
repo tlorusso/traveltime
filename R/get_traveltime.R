@@ -10,11 +10,11 @@
 #' @param traveltime traveltime in seconds
 #' @param type transportation mode
 #' @param departure time of departure, format: "2018-08-05T08:00:00Z"
-#' @importFrom jsonlite fromJSON
 #' @importFrom sf st_as_sf
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr bind_cols
 #' @importFrom dplyr "%>%"
+#' @importFrom dplyr mutate
 #' @export
 #' @rdname get_traveltime
 #' @details To call the API via the package you need to get an api-key here \url{http://docs.traveltimeplatform.com/overview/getting-keys/}.
@@ -47,6 +47,6 @@ polygonslist <- splitlist %>%
   purrr::map(~make_polygons(.))
 
 do.call(rbind, polygonslist) %>%
-  mutate(traveltime=traveltime)
+  dplyr::mutate(traveltime=traveltime)
 
 }
