@@ -18,7 +18,7 @@ pacman::p_load(dplyr, purrr, sf, mapview, traveltimeR)
 ```
 
 
-You can easily retrieve the isochrones with the get_traveltime function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
+You can easily retrieve the isochrones with the get_traveltime function.
 
 
 ### querying the Traveltime-API with get_traveltime
@@ -40,3 +40,5 @@ traveltime30 <- get_traveltime(appId="YourAppId",
                departure="2018-10-05T08:00:00Z")
 
 ```
+
+Examples of how to ... the traveltime-isochrones in R easily are available in the vignette.
