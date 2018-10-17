@@ -84,19 +84,18 @@ With the latest version of ggplot2, `geom_sf` has been introduced, which allows 
 
 ```{r, warning=F, message=F, eval=FALSE}
 
-library(ggmap)
-
-basemap2 <- get_stamenmap(bbox = unname(st_bbox(traveltime60)),maptype = "toner-hybrid")
-
 # with purrr::map we can easily retrieve isochornes for different timespans
 
-traveltimes <-c(1800,2400,3600) %>% 
-              map(.,~get_traveltime(appId="YourAppId",
-                    apiKey="YourApiKey",
-                    location=c(47.378610,8.54000),
-                    traveltime=.x,
-                    type="public_transport",
-                    departure="2018-10-05T08:00:00Z"))
+
+traveltimes <-c("walking","cycling","driving","public_transport") %>%
+  map(.,~get_traveltime(appId="YourAppId",
+                        apiKey="YourApiKey",
+                        location=c(47.37787,8.54045),
+                        traveltime=1800,
+                        type=.x,
+                        departure="2018-10-16T09:00:00Z") %>%
+        mutate(mode=.x))
+
 
 # map_dfr appearingly breaks the resulting sf objects (sfc_polygons)
 
@@ -113,12 +112,14 @@ basemap <- get_stamenmap(bbox = unname(st_bbox(traveltimes)),maptype = "toner-hy
 
 #plot
 ggmap(basemap)+
-  geom_sf(data=traveltimes,aes(fill=as.factor(traveltime/60)),inherit.aes = FALSE, colour=NA, alpha=0.4)+
+  geom_sf(data=traveltimes,inherit.aes = FALSE, aes(fill=mode), alpha=0.5,color=NA)+
+  scale_fill_viridis_d()+
   theme_void()+
-  theme(plot.title=element_text(face="bold"))+
   coord_sf(datum = NA)+
-  scale_fill_viridis_d(name="minutes")+
-  labs(title="Traveltimemap", subtitle="How far can you travel from a certain location within a given timeframe?", caption="data : traveltimeplatform.com")
+  facet_wrap(~mode)+
+  guides(fill="none")+
+  theme(plot.title=element_text(face="bold"))+
+  labs(title="Traveltimemap", subtitle="How far can you travel from a certain location within 30 minutes?", caption="data : traveltimeplatform.com")
   
 ```
 
