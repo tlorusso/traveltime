@@ -104,7 +104,7 @@ traveltimes <- do.call(rbind,traveltimes)
 ```
 
 
-```{r, warning=F, message=F}
+```{r, warning=F, message=F, dpi = 200, out.width="100%"}
 library(ggmap)
 
 #get basemap with ggmap
