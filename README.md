@@ -1,4 +1,4 @@
-## traveltimeR - API Wrapper for the Traveltime API
+## traveltime - API Wrapper for the Traveltime API
 
 The traveltimeR-package allows to retrieve isochrones for traveltimemaps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
 https://api.traveltimeapp.com/
@@ -9,11 +9,11 @@ For non-commercial use the usage of the API is free up to 10'000 queries a month
 
 
 ```
-devtools::install_github("tlorusso/traveltimeR")
+devtools::install_github("tlorusso/traveltime")
 
 # load packages
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(dplyr, purrr, sf, mapview, traveltimeR)
+pacman::p_load(dplyr, purrr, sf, mapview, traveltime)
 
 ```
 

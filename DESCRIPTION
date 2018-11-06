@@ -1,4 +1,4 @@
-Package: traveltimeR
+Package: traveltime
 Type: Package
 Title: API Wrapper for the Traveltime Platform API 
 Version: 0.1.0
