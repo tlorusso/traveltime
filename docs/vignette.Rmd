@@ -1,5 +1,5 @@
 ---
-title: "traveltimeR - API Wrapper for the Traveltime API"
+title: "traveltime - API Wrapper for the Traveltime API"
 output: 
   prettydoc::html_pretty:
     theme: cayman
@@ -9,7 +9,7 @@ output:
     df_print: paged
 ---
 
-The traveltimeR-package allows to retrieve isochrones for traveltimemaps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
+The traveltime-package allows to retrieve isochrones for traveltime-maps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
 
 https://api.traveltimeapp.com/
 
@@ -19,11 +19,11 @@ For non-commercial use the usage of the API is free up to 10'000 queries a month
 
 
 ```{r, message=F, warning=F}
-devtools::install_github("tlorusso/traveltimeR")
+devtools::install_github("tlorusso/traveltime")
 
 # load packages
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(dplyr, purrr, sf, mapview, traveltimeR)
+pacman::p_load(dplyr, purrr, sf, mapview, traveltime)
 
 ```
 
@@ -130,7 +130,7 @@ How far can you drive within 30min from Zurich at 7AM vs 11PM? An animated map u
 ```{r,message=F, warning=F}
 
 library(gganimate)
-library(traveltimeR)
+library(traveltime)
 library(tidyverse)
 library(transformr)
 library(sf)
@@ -139,7 +139,7 @@ library(sf)
 
 We can call the traveltime-API to get the isochrones for several departure-times. We could do the same for different modes of transport, locations and traveltime. With `purrr::map` we can pass vectors of elements to the `get_traveltime`- function to do so. 
 ```{r,eval=FALSE}
-allofit <-c("2018-10-05T07:00:00Z","2018-10-05T23:00:00Z") %>%
+traveltimes <- c("2018-11-12T07:00:00+01:00","2018-11-12T23:00:00+01:00") %>%
   map(.,~get_traveltime(appId="YourAppId",
                         apiKey="YourApiKey",
                         location=c(47.378610,8.54000),
@@ -147,7 +147,7 @@ allofit <-c("2018-10-05T07:00:00Z","2018-10-05T23:00:00Z") %>%
                         type="driving",
                         departure=.x) %>% mutate(time=.x))
 
-df <-do.call(rbind, allofit)
+animationdf <-do.call(rbind, traveltimes)
 
 # create a group variable based on the area of the polygons in order to assure a smooth transformation
 df <- animationdf %>% group_by(as.factor(time))%>% 
@@ -157,7 +157,7 @@ df <- animationdf %>% group_by(as.factor(time))%>%
 ```{r,echo=FALSE, message=F, warning=F}
 animationdf <- readRDS("animation.RDS")
 
-df <- animationdf %>% group_by(as.factor(time))%>% 
+df <- animationdf %>% group_by(time)%>% 
                       mutate(group=dense_rank(st_area(geometry)))
 ```
 

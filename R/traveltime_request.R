@@ -18,11 +18,20 @@ traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", locat
   url <- "http://api.traveltimeapp.com/v4/time-map"
 
 
+
+# Default settings used in the online app:  https://app.traveltimeplatform.com/
+  # `departure_searches[*].pt_change_delay` of 60[s]
+  # a walking time `departure_searches[*].walking_time` of 25[minutes]
+  # range enabled `departure_searches[*].range` with a width of 30 [minutes].
+
   requestBody <- paste0('{
                         "departure_searches" : [
                         {"id" : "request",
                         "coords": {"lat":', location[1], ', "lng":', location[2],' },
                         "transportation" : {"type" : "',type,'"} ,
+                        "pt_change_delay": 60 ,
+                        "walking_time" : 1500,
+                        "range": {"enabled": true, "width": 1800 },
                         "travel_time" : ', traveltime, ',
                         "departure_time" : "', departure,'"
                         }
