@@ -44,5 +44,5 @@ traveltime30 <- get_traveltime(appId="YourAppId",
 
 Some first examples of how to use the API-Wrapper and what can be done with the data are available in the vignette:
 
-https://tlorusso.github.io/traveltimeR/vignette.html
+https://tlorusso.github.io/traveltime/vignette.html
 
