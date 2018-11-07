@@ -1,32 +1,28 @@
 ## traveltime - API Wrapper for the Traveltime API
 
-The traveltime-package allows to retrieve isochrones for traveltimemaps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
+The traveltime-package allows to retrieve isochrones for traveltime-maps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
 https://api.traveltimeapp.com/
 
 __GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-keys/
 
 For non-commercial use the usage of the API is free up to 10'000 queries a month (max 30 queries per min). For commercial use (e.g. to integrate the API into a website) a license is needed. 
 
-
+You can install the traveltime-package with devtools or remotes from Github. 
 ```
 devtools::install_github("tlorusso/traveltime")
 
-# load packages
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(dplyr, purrr, sf, mapview, traveltime)
+library(traveltime)
 
 ```
 
-
-You can easily retrieve the isochrones with the get_traveltime function.
-
+The `get_traveltime` function allows to easily retrieve traveltime-isochrones via the Traveltime-API.
 
 ### querying the Traveltime-API with get_traveltime
 
 ```
 # retrieve isochrones via request 
 
-# The following transport modes are supported:
+The following transport modes are supported:
 
 # "cycling"", "cycling_ferry", "driving", "driving+train", "driving_ferry", "public_transport", 
 # "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
@@ -38,9 +34,16 @@ traveltime30 <- get_traveltime(appId="YourAppId",
                traveltime=1800,
                type="public_transport",
                departure="2018-10-05T08:00:00Z")
+			   
+# take a glimpse at the data
+
+plot(traveltime30)
+
+# or on top of a leaflet-map with mapview
+
+mapview::mapview(traveltime30)
 
 ```
-
 
 Some first examples of how to use the API-Wrapper and what can be done with the data are available in the vignette:
 

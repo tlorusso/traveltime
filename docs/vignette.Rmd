@@ -68,10 +68,8 @@ How far you can travel from Zurich Mainstation by public transport within 30 min
 
 ```{r,message=F, warning=F}
 
-# mapview(traveltime, zcol="traveltime",burst = TRUE)
-
-
 m1 = mapview(traveltime60,  col.regions = c("grey"))
+# add the second layer on top
 m1 + traveltime30
 
 
@@ -104,7 +102,7 @@ traveltimes <- do.call(rbind,traveltimes)
 ```
 
 
-```{r, warning=F, message=F, dpi = 200, out.width="100%"}
+```{r, warning=F, message=F, dpi = 120, out.width="100%"}
 library(ggmap)
 
 #get basemap with ggmap
@@ -118,8 +116,10 @@ ggmap(basemap)+
   coord_sf(datum = NA)+
   facet_wrap(~mode)+
   guides(fill="none")+
-  theme(plot.title=element_text(face="bold"))+
-  labs(title="Traveltimemap", subtitle="How far can you travel from a certain location within 30 minutes?", caption="data : traveltimeplatform.com")
+  theme(plot.title=element_text(face="bold"),
+        plot.subtitle=element_text(size = 10, margin=margin(t=5, b = 10)), 
+        strip.text=element_text(face="bold",margin=margin(b = 4)))+
+  labs(title="Traveltimemap", subtitle="How far can you travel from Zurich mainstation within 30 minutes?",         caption="data : traveltimeplatform.com")
   
 ```
 
@@ -132,7 +132,6 @@ How far can you drive within 30min from Zurich at 7AM vs 11PM? An animated map u
 library(gganimate)
 library(traveltime)
 library(tidyverse)
-library(transformr)
 library(sf)
 
 ```
@@ -170,11 +169,12 @@ basemap <- get_stamenmap(bbox = unname(st_bbox(animationdf)),maptype = "toner-hy
 animation <- ggmap(basemap)+
   geom_sf(data = df, aes(group=group,fill=time),inherit.aes = FALSE, alpha=0.4, colour=NA)  +
   theme_void()+
-  theme(plot.title=element_text(face="bold"))+
+  theme(plot.title=element_text(face="bold"),
+        plot.subtitle=element_text(size = 13, margin=margin(t=5, b = 10)))+
   coord_sf(datum = NA)+
   transition_states(time, 2, 1)+
-  scale_fill_manual(name="Departure", values = c("steelblue", "darkblue"))+
-  labs(title = 'How far can you drive within half an hour from Zurich Mainstation?', subtitle='Departure : {closest_state}',caption="data : traveltimeplatform.com")
+  scale_fill_manual(name="Departure time", values = c("steelblue", "darkblue"))+
+  labs(title = 'How far can you drive within half an hour from Zurich mainstation?', subtitle='Departure : {closest_state}',caption="data : traveltimeplatform.com")
 
 animation
 
