@@ -94,10 +94,9 @@ traveltimes <-c("walking","cycling","driving","public_transport") %>%
                         departure="2018-11-15T08:00:00+01:00") %>%
         mutate(mode=.x))
 
+# map_dfr does not work well with sf objects (yet?) so we just..
 
-# map_dfr appearingly breaks the resulting sf objects (sfc_polygons)
-
-# ... bind the dataframes toghether with do.call
+# ... rbind the dataframes toghether via do.call
 traveltimes <- do.call(rbind,traveltimes)
 ```
 
