@@ -44,7 +44,7 @@ traveltime30 <- get_traveltime(appId="YourAppId",
                location=c(47.378610,8.54000),
                traveltime=1800,
                type="public_transport",
-               departure="2018-10-05T08:00:00Z")
+               departure="2018-11-15T08:00:00+01:00")
 
 # ... and within 60 minutes?
 traveltime60 <- get_traveltime(appId="YourAppId",
@@ -52,7 +52,7 @@ traveltime60 <- get_traveltime(appId="YourAppId",
                location=c(47.378610,8.54000),
                traveltime=3600,
                type="public_transport",
-               departure="2018-10-05T08:00:00Z")
+               departure="2018-11-15T08:00:00+01:00")
 
 ```
 
@@ -78,7 +78,7 @@ m1 + traveltime30
 
 # Plotting a Traveltime-Map (ggmap & ggplot2)
 
-With the latest version of ggplot2, `geom_sf` has been introduced, which allows to plot geodata stored in dataframes with class sf very conveniently. Let's retrieve isochrones for three different traveltimes and plot them on top of a map.
+With the latest version of ggplot2, `geom_sf` has been introduced, which allows to plot geodata stored in dataframes with class sf very conveniently. Let's retrieve isochrones for four different travel modes and compare how far you can go by foot, bike, car or public transport within half an hour.
 
 ```{r, warning=F, message=F, eval=FALSE}
 
@@ -91,7 +91,7 @@ traveltimes <-c("walking","cycling","driving","public_transport") %>%
                         location=c(47.37787,8.54045),
                         traveltime=1800,
                         type=.x,
-                        departure="2018-10-16T09:00:00Z") %>%
+                        departure="2018-11-15T08:00:00+01:00") %>%
         mutate(mode=.x))
 
 

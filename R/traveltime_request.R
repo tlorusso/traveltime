@@ -60,7 +60,7 @@ flat <- c(1:length(respo$results[[1]]$shapes)) %>%
 
 
   if (ncol(flat)!=3) {
-    stop("request did not deliver isochrone coordinates - please check appId / apiKey and / or if the coordinates lie in a supported country.", call. = FALSE)
+    stop("request did not deliver isochrone coordinates - please check appId / apiKey and / or if the coordinates lie in a supported country. Also, departure time must lie in the future.", call. = FALSE)
   }
 
   #convert to sf object

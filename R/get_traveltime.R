@@ -9,7 +9,7 @@
 #' @param location vector of lat / long coordinates, coordinate system WGS84 / espg 4326, example: c(47.233,8.234).
 #' @param traveltime traveltime in seconds
 #' @param type transportation mode
-#' @param departure time of departure, format: "2018-08-05T08:00:00Z"
+#' @param departure time of departure, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"
 #' @importFrom sf st_as_sf
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr bind_cols
@@ -27,7 +27,7 @@
 #' location=c(47.378610,8.54000),
 #' traveltime=1800,
 #' type="public_transport",
-#' departure="2018-10-05T08:00:00Z")
+#' departure="2018-10-05T08:00:00+01:00")
 #'
 #' #plot the isochrones
 #' plot(traveltime30)

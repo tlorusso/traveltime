@@ -18,7 +18,7 @@ get_traveltime(appId = "yourAppId", apiKey = "yourApiKey",
 
 \item{type}{transportation mode}
 
-\item{departure}{time of departure, format: "2018-08-05T08:00:00Z"}
+\item{departure}{time of departure, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"}
 }
 \value{
 the results from the search
@@ -39,7 +39,7 @@ apiKey="yourApiKey",
 location=c(47.378610,8.54000),
 traveltime=1800,
 type="public_transport",
-departure="2018-10-05T08:00:00Z")
+departure="2018-10-05T08:00:00+01:00")
 
 #plot the isochrones
 plot(traveltime30)
