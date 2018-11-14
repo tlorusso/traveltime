@@ -11,7 +11,7 @@ sf_points %>%
     dplyr::arrange(ID) %>%
     dplyr::summarize(INT = dplyr::first(ID), do_union = FALSE) %>%
     sf::st_cast("POLYGON") %>%
-    dplyr::select(-INT,-do_union)
+    dplyr::select(-INT)
 
 }
 
