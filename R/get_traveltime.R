@@ -10,6 +10,7 @@
 #' @param traveltime traveltime in seconds
 #' @param type transportation mode
 #' @param departure time of departure, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"
+#' @param arrival time of arrival, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"
 #' @importFrom sf st_as_sf
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr bind_cols
@@ -36,9 +37,9 @@
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 #' @export
 
-get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL){
+get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL){
 
-traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure)
+traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival)
 
 splitlist <-traveltimelist %>%
   split(.$group)
