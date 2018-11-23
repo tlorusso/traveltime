@@ -36,9 +36,9 @@
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 #' @export
 
-get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL){
+get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL){
 
-traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure)
+traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival)
 
 splitlist <-traveltimelist %>%
   split(.$group)

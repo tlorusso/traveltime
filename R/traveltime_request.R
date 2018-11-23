@@ -5,27 +5,29 @@
 #' @importFrom httr POST
 #' @noRd
 
-traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL){
+traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL, arrival=NULL){
 
-  #checks : missing parameters?
+  #checks : missing parameters
   if (length(location)!=2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
   if (is.null(traveltime)) stop("traveltime missing - set traveltime (in seconds)", call. = FALSE)
   if (is.null(apiKey)) stop("apiKey is missing.", call. = FALSE)
   if (is.null(appId)) stop("appId is missing.", call. = FALSE)
   if (is.null(type)) stop("transport mode not defined - please choose a mode of transport", call. = FALSE)
-
+  if (is.null(departure)&is.null(arrival)) stop("please set a departure- or arrival time", call. = FALSE)
+  if (!is.null(departure)&!is.null(arrival)) stop("set departure OR arrival time only", call. = FALSE)
 
   url <- "http://api.traveltimeapp.com/v4/time-map"
 
+  direction <- ifelse(!is.null(arrival),"arrival","departure")
 
+  time <- ifelse(!is.null(arrival),arrival,departure)
 
 # Default settings used in the online app:  https://app.traveltimeplatform.com/
   # `departure_searches[*].pt_change_delay` of 60[s]
   # a walking time `departure_searches[*].walking_time` of 25[minutes]
   # range enabled `departure_searches[*].range` with a width of 30 [minutes].
 
-  requestBody <- paste0('{
-                        "departure_searches" : [
+  requestBody <- paste0('{"',direction,'_searches" : [
                         {"id" : "request",
                         "coords": {"lat":', location[1], ', "lng":', location[2],' },
                         "transportation" : {"type" : "',type,'"} ,
@@ -33,7 +35,7 @@ traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", locat
                         "walking_time" : 1500,
                         "range": {"enabled": true, "width": 1800 },
                         "travel_time" : ', traveltime, ',
-                        "departure_time" : "', departure,'"
+                        "',direction,'_time" : "', time,'"
                         }
                         ] }')
 
