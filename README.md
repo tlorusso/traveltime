@@ -32,7 +32,7 @@ traveltime30 <- get_traveltime(appId="YourAppId",
                location=c(47.378610,8.54000),
                traveltime=1800,
                type="public_transport",
-               departure="2018-10-05T08:00:00Z")
+               departure="YYYY-MM-DDT08:00:00Z")
 			   
 # take a glimpse at the data
 
