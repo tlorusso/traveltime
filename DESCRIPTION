@@ -1,7 +1,7 @@
 Package: traveltime
 Type: Package
 Title: API Wrapper for the Traveltime Platform API 
-Version: 0.0.1
+Version: 0.0.2
 Author: Thomas Lo Russo
 Maintainer: Thomas Lo Russo <th.lorusso@gmail.com>
 Description: API Wrapper for the Traveltime Platform API (https://www.traveltimeplatform.com/).
