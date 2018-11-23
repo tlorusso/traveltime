@@ -5,7 +5,8 @@
 \title{API Wrapper for the Traveltime API}
 \usage{
 get_traveltime(appId = "yourAppId", apiKey = "yourApiKey",
-  location = NULL, traveltime = NULL, type = NULL, departure = NULL)
+  location = NULL, traveltime = NULL, type = NULL, departure = NULL,
+  arrival = NULL)
 }
 \arguments{
 \item{appId}{Traveltime-Plattform Application ID}
@@ -19,6 +20,8 @@ get_traveltime(appId = "yourAppId", apiKey = "yourApiKey",
 \item{type}{transportation mode}
 
 \item{departure}{time of departure, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"}
+
+\item{arrival}{time of arrival, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"}
 }
 \value{
 the results from the search
