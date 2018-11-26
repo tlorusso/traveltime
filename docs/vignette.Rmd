@@ -11,7 +11,7 @@ output:
 
 The traveltime-package allows to retrieve isochrones for traveltime-maps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
 
-https://api.traveltimeapp.com/
+http://docs.traveltimeplatform.com/overview/introduction
 
 __GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-keys/
 
@@ -183,7 +183,6 @@ animation
 
 ```
 ![](traveltime.gif)
-
 
 
 
