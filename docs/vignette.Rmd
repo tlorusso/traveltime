@@ -56,6 +56,7 @@ traveltime60 <- get_traveltime(appId="YourAppId",
 
 ```
 
+If you are interested in the opposite (from how far is location y reachable within x minutes) just use the  `arrival` argument instead of `departure`.
 ```{r, echo=FALSE, eval=TRUE}
 traveltime30 <- readRDS("traveltime30.RDS")
 traveltime60 <- readRDS("traveltime60.RDS")
