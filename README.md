@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tlorusso/traveltime.svg?branch=master)](https://travis-ci.org/tlorusso/traveltime)
+
 ## traveltime - API Wrapper for the Traveltime API
 
 The traveltime-package allows to retrieve isochrones for traveltime-maps from the [Traveltime Platform API](http://docs.traveltimeplatform.com/overview/introduction) directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
