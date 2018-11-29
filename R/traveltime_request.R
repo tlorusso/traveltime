@@ -55,10 +55,21 @@ traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", locat
   # extract content
   respo <-httr::content(response)
 
+  respo <<- respo
+
 
   # the shapes list contains all the polygons - convert to data.frame
 flat <- c(1:length(respo$results[[1]]$shapes)) %>%
     purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$shell),.id="group")
+
+if(!is.null(shapes[[1]]$holes)){
+
+  holes <- c(1:length(respo$results[[1]]$shapes)) %>%
+    purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$shell),.id="group")
+
+
+
+}
 
 
   if (ncol(flat)!=3) {
@@ -69,6 +80,11 @@ flat <- c(1:length(respo$results[[1]]$shapes)) %>%
   sf::st_as_sf(x = flat,
                  coords = c("lng", "lat"),
                  crs = "+proj=longlat +datum=WGS84")
+
+  # how to pass to pass holes to parent environement?
+  # sf::st_as_sf(x = holes,
+  #              coords = c("lng", "lat"),
+  #              crs = "+proj=longlat +datum=WGS84")
 
 
 }
