@@ -51,5 +51,4 @@ do.call(rbind, polygonslist) %>%
   sf::st_combine() %>%
   sf::st_sf(traveltime=traveltime, geometry = .)
 
-
 }
