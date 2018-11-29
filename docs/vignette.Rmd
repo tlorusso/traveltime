@@ -98,7 +98,7 @@ traveltimes <-c("walking","cycling","driving","public_transport") %>%
 # map_dfr does not work well with sf objects (yet?) so we just..
 
 # ... rbind the dataframes toghether via do.call
-traveltimes <- do.call(rbind,traveltimes)
+df<-do.call(rbind.data.frame, traveltimes)
 ```
 
 
