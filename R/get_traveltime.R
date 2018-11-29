@@ -48,7 +48,6 @@ polygonslist <- splitlist %>%
   purrr::map(~make_polygons(.))
 
 do.call(rbind, polygonslist) %>%
-  st_combine() %>%
-  st_sf(traveltime=traveltime, geometry = .)
+  dplyr::mutate(traveltime = traveltime)
 
 }
