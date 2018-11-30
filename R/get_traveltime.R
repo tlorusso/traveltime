@@ -11,6 +11,7 @@
 #' @param type transportation mode
 #' @param departure time of departure, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"
 #' @param arrival time of arrival, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"
+#' @param holes defaults to FALSE. If set TRUE, holes are integrated into the isochrones.
 #' @importFrom sf st_as_sf
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr bind_cols
