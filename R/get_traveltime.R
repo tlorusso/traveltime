@@ -41,31 +41,28 @@ get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location =
 
 traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival,holes=holes)
 
-splitlist <-traveltimelist %>%
-  split(.$group)
+# splitlist <-traveltimelist %>%
+#   split(.$group)
+#
+# polygonslist <- splitlist %>%
+#   purrr::map(~make_polygons(.))
+#
+# do.call(rbind, polygonslist) %>%
+#   sf::st_combine() %>%
+#   sf::st_sf(traveltime=traveltime, geometry = .)
 
-polygonslist <- splitlist %>%
-  purrr::map(~make_polygons(.))
-
-do.call(rbind, polygonslist) %>%
+make_polygons(traveltimelist) %>%
   sf::st_combine() %>%
-  sf::st_sf(traveltime=traveltime, geometry = .)
+  sf::st_sf(traveltime="traveltime",geometry=.)
 
-if(isTRUE(holes)){
-  library(tidyverse)
-
-  plot(make_polygons(holes) %>% sf::st_combine())
-
-  splitlist <- holes %>%
-    split(.$group)
-
-polygonslist <- splitlist %>%
-  purrr::map(~make_polygons(.))
-
-holes2 <<- do.call(rbind, polygonslist) %>%
-  sf::st_combine() %>%
-  sf::st_sf(traveltime=traveltime, geometry = .)
-
-}
+# if(isTRUE(holes)){
+#
+#   #do the same for standard?
+# holeslist <- make_polygons(holesdf) %>%
+#               sf::st_combine() %>%
+#               sf::st_sf(traveltime="traveltime",geometry=.)
+#
+#
+# }
 
 }

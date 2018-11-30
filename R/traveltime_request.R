@@ -59,29 +59,24 @@ traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", locat
 
 
   # the shapes list contains all the polygons - convert to data.frame
+
 flat <- c(1:length(respo$results[[1]]$shapes)) %>%
     purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$shell),.id="group")
 
 # if(isTRUE(holes)){
+
+#  the same as shell only?
 #
+# holesdf <<- purrr::map(respo[1]$results[[1]]$shapes, "holes")%>%
+#                 Filter(function(x) length(x) > 0, .) %>%
+#                 purrr::map_dfr(purrr::flatten_df,.id="group")
 #
-# holes <<- map(respo[1]$results[[1]]$shapes, "holes")%>%
-#                 Filter(function(x) length(x) > 0, .)
-#
-#
-#   holes <- c(1:length(respo$results[[1]]$shapes)) %>%
-#     purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$holes),.id="group")
-#
-#   holes <<-sf::st_as_sf(x = flat,
+# holesdf <<-sf::st_as_sf(x = flat,
 #                coords = c("lng", "lat"),
 #                crs = "+proj=longlat +datum=WGS84")
-
-  # holesu
-
-  # holesup <- eval(holes, envir=sys.frame(-1))
-
-
-# }
+#
+#
+#  }
 
 
   if (ncol(flat)!=3) {
