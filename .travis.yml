@@ -33,8 +33,13 @@ latex: false
 addons:
   apt:
     packages:
-      - libgdal-dev
+      - libudunits2-dev
       - libproj-dev
+      - libgeos-dev
+      - libspatialite-dev
+      - libgdal-dev
+
+
 
 #env
 env:
