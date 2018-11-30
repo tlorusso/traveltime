@@ -11,5 +11,5 @@ License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: httr,sf,dplyr,purrr
+Imports: httr,sf,dplyr,purrr,units
 NeedsCompilation: no

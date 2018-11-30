@@ -5,7 +5,7 @@
 #' @importFrom httr POST
 #' @noRd
 
-traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL, arrival=NULL){
+traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL, arrival=NULL,holes=FALSE){
 
   #checks : missing parameters
   if (length(location)!=2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
@@ -62,19 +62,32 @@ traveltime_request <- function(appId = "yourAppId", apiKey = "yourApiKey", locat
 flat <- c(1:length(respo$results[[1]]$shapes)) %>%
     purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$shell),.id="group")
 
-if(!is.null(shapes[[1]]$holes)){
+# if(isTRUE(holes)){
+#
+#
+# holes <<- map(respo[1]$results[[1]]$shapes, "holes")%>%
+#                 Filter(function(x) length(x) > 0, .)
+#
+#
+#   holes <- c(1:length(respo$results[[1]]$shapes)) %>%
+#     purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$holes),.id="group")
+#
+#   holes <<-sf::st_as_sf(x = flat,
+#                coords = c("lng", "lat"),
+#                crs = "+proj=longlat +datum=WGS84")
 
-  holes <- c(1:length(respo$results[[1]]$shapes)) %>%
-    purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$shell),.id="group")
+  # holesu
+
+  # holesup <- eval(holes, envir=sys.frame(-1))
 
 
-
-}
+# }
 
 
   if (ncol(flat)!=3) {
     stop("request did not deliver isochrone coordinates - please check appId / apiKey and / or if the coordinates lie in a supported country. Also, departure time must lie in the future.", call. = FALSE)
   }
+
 
   #convert to sf object
   sf::st_as_sf(x = flat,

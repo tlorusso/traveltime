@@ -37,9 +37,9 @@
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 #' @export
 
-get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL){
+get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL,holes=FALSE){
 
-traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival)
+traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival,holes=holes)
 
 splitlist <-traveltimelist %>%
   split(.$group)
@@ -50,5 +50,22 @@ polygonslist <- splitlist %>%
 do.call(rbind, polygonslist) %>%
   sf::st_combine() %>%
   sf::st_sf(traveltime=traveltime, geometry = .)
+
+if(isTRUE(holes)){
+  library(tidyverse)
+
+  plot(make_polygons(holes) %>% sf::st_combine())
+
+  splitlist <- holes %>%
+    split(.$group)
+
+polygonslist <- splitlist %>%
+  purrr::map(~make_polygons(.))
+
+holes2 <<- do.call(rbind, polygonslist) %>%
+  sf::st_combine() %>%
+  sf::st_sf(traveltime=traveltime, geometry = .)
+
+}
 
 }
