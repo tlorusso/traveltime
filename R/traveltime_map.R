@@ -54,7 +54,8 @@ traveltimelist <- traveltime_map_request(appId=appId,apiKey=apiKey,location=loca
 
 make_polygons(traveltimelist) %>%
   sf::st_combine() %>%
-  sf::st_sf(traveltime="traveltime",geometry=.)
+  sf::st_sf(geometry=.) %>%
+  dplyr::mutate(lat=location[1],lng=location[2],traveltime=traveltime,type=type,departure=ifelse(!is.null(departure),departure,NA),arrival=ifelse(!is.null(arrival),departure,NA))
 
 # if(isTRUE(holes)){
 #
