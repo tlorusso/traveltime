@@ -1,13 +1,15 @@
 Package: traveltime
 Type: Package
 Title: API Wrapper for the Traveltime Platform API 
-Version: 0.0.2
+Version: 0.0.2.9000
 Author: Thomas Lo Russo
 Maintainer: Thomas Lo Russo <th.lorusso@gmail.com>
 Description: API Wrapper for the Traveltime Platform API (https://www.traveltimeplatform.com/).
   What area is reachable from a certain location within a given timespan? Allows to get traveltime-isochrones for several transport-modes (public transport, car, bicycle, walking, driving & train) from the traveltime API. The isochrones come into R in form of geometries stored in sf-dataframes. 
-  API-Key required: (https://www.traveltimeplatform.com/). For non-commercial use the usage of the API is free up to 10’000 queries a month (max 30 queries per min). For commercial use (e.g. to integrate the API into a commercial service or website) a license is needed.
-License: MIT
+  API-Key required: (https://www.traveltimeplatform.com/). For non-commercial use the usage of the API is free up to 10’000 queries a month (max 30 queries per min). For commercial use (e.g. to integrate the API into a website) a license is needed.
+License: GPL
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
+Imports: httr,sf,dplyr,purrr,units
+NeedsCompilation: no

@@ -17,13 +17,13 @@
 #' @importFrom dplyr "%>%"
 #' @importFrom dplyr mutate
 #' @export
-#' @rdname get_traveltime
+#' @rdname traveltime_map
 #' @details To call the API via the package you need to get an api-key here \url{http://docs.traveltimeplatform.com/overview/getting-keys/}.
 #'          If you're not using the API for commercial use users can get 10,000 free API queries a month. The following transport modes are supported (type):"cycling"", "cycling_ferry", "driving", "driving+train", "driving_ferry", "public_transport", "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
 #' @return the results from the search
 #' @examples
 #'  \donttest{
-#' traveltime30 <- get_traveltime(appId="yourAppID",
+#' traveltime30 <- traveltime_map(appId="yourAppID",
 #' apiKey="yourApiKey",
 #' location=c(47.378610,8.54000),
 #' traveltime=1800,
@@ -37,17 +37,14 @@
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 #' @export
 
-get_traveltime<- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL){
+traveltime_map <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL){
 
-traveltimelist <- traveltime_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival)
+traveltimelist <- map_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival)
 
-splitlist <-traveltimelist %>%
-  split(.$group)
+make_polygons(traveltimelist) %>%
+  sf::st_combine() %>%
+  sf::st_sf(geometry=.) %>%
+  dplyr::mutate(lat=location[1],lng=location[2],traveltime=traveltime,type=type,departure=ifelse(!is.null(departure),departure,NA),arrival=ifelse(!is.null(arrival),departure,NA))
 
-polygonslist <- splitlist %>%
-  purrr::map(~make_polygons(.))
-
-do.call(rbind, polygonslist) %>%
-  dplyr::mutate(traveltime = traveltime)
 
 }

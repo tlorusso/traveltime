@@ -27,7 +27,7 @@ pacman::p_load(dplyr, purrr, sf, mapview, traveltime)
 
 ```
 
-You can easily retrieve the isochrones with the get_traveltime function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
+You can easily retrieve the isochrones with the `traveltime_map` function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
 
 # Querying the Traveltime-API with get_traveltime
 ```{r, echo=TRUE, eval=FALSE}
@@ -39,7 +39,7 @@ You can easily retrieve the isochrones with the get_traveltime function. Find a 
 # "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
 
 # how far can you go by public transport within 30 minutes?
-traveltime30 <- get_traveltime(appId="YourAppId",
+traveltime30 <- traveltime_map(appId="YourAppId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
                traveltime=1800,
@@ -47,7 +47,7 @@ traveltime30 <- get_traveltime(appId="YourAppId",
                departure="2018-11-15T08:00:00+01:00")
 
 # ... and within 60 minutes?
-traveltime60 <- get_traveltime(appId="YourAppId",
+traveltime60 <- traveltime_map(appId="YourAppId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
                traveltime=3600,
@@ -87,7 +87,7 @@ With the latest version of ggplot2, `geom_sf` has been introduced, which allows 
 
 
 traveltimes <-c("walking","cycling","driving","public_transport") %>%
-  map(.,~get_traveltime(appId="YourAppId",
+  map(.,~traveltime_map(appId="YourAppId",
                         apiKey="YourApiKey",
                         location=c(47.37787,8.54045),
                         traveltime=1800,
@@ -136,10 +136,10 @@ library(sf)
 
 ```
 
-We can call the traveltime-API to get the isochrones for several departure-times. We could do the same for different modes of transport, locations and traveltime. With `purrr::map` we can pass vectors of elements to the `get_traveltime`- function to do so. 
+We can call the traveltime-API to get the isochrones for several departure-times. We could do the same for different modes of transport, locations and traveltime. With `purrr::map` we can pass vectors of elements to the `traveltime_map`- function to do so. 
 ```{r,eval=FALSE}
 traveltimes <- c("2018-11-12T07:00:00+01:00","2018-11-12T23:00:00+01:00") %>%
-  map(.,~get_traveltime(appId="YourAppId",
+  map(.,~traveltime_map(appId="YourAppId",
                         apiKey="YourApiKey",
                         location=c(47.378610,8.54000),
                         traveltime=1800,

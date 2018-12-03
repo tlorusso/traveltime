@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/tlorusso/traveltime.svg?branch=dev)](https://travis-ci.org/tlorusso/traveltime)
+
 ## traveltime - API Wrapper for the Traveltime API
 
 The traveltime-package allows to retrieve isochrones for traveltime-maps from the [Traveltime Platform API](http://docs.traveltimeplatform.com/overview/introduction) directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
@@ -14,7 +16,7 @@ library(traveltime)
 
 ```
 
-The `get_traveltime` function allows to easily retrieve traveltime-isochrones via the Traveltime-API.
+The `traveltime_map` function allows to easily retrieve traveltime-isochrones via the Traveltime-API.
 
 ### querying the Traveltime-API with get_traveltime
 
@@ -26,8 +28,10 @@ The following transport modes are supported:
 # "cycling"", "cycling_ferry", "driving", "driving+train", "driving_ferry", "public_transport", 
 # "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
 
-# how far can you go from a certain location by public transport within 30 minutes (departure search)? 
-traveltime30 <- get_traveltime(appId="YourAppId",
+
+# how far can you go by public transport within 30 minutes?
+
+traveltime30 <- traveltime_map(appId="YourAppId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
                traveltime=1800,
@@ -43,7 +47,8 @@ plot(traveltime30)
 mapview::mapview(traveltime30)
 
 # You can switch to arrival search (from how far is a location reachable within x min?) just by using the 'arrival' argument instead of 'departure'.
-traveltime30_arrival <- get_traveltime(appId="YourAppId",
+
+traveltime30_arrival <- traveltime_map(appId="YourAppId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
                traveltime=1800,
