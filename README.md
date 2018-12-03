@@ -18,7 +18,7 @@ library(traveltime)
 
 The `traveltime_map` function allows to easily retrieve traveltime-isochrones via the Traveltime-API.
 
-### querying the Traveltime-API with get_traveltime
+### querying the Traveltime-API with traveltime_map
 
 ```
 # retrieve isochrones via request 
