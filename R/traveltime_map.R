@@ -40,7 +40,7 @@
 
 traveltime_map <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL,holes=FALSE){
 
-traveltimelist <- traveltime_map_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival,holes=holes)
+traveltimelist <- map_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival,holes=holes)
 
 # splitlist <-traveltimelist %>%
 #   split(.$group)

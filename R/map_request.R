@@ -5,7 +5,7 @@
 #' @importFrom httr POST
 #' @noRd
 
-traveltime_map_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL, arrival=NULL,holes=FALSE){
+map_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL, arrival=NULL,holes=FALSE){
 
   #checks : missing parameters
   if (length(location)!=2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
