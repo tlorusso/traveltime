@@ -39,8 +39,6 @@ addons:
       - libspatialite-dev
       - libgdal-dev
 
-
-
 #env
 env:
   global:

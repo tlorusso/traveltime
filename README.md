@@ -16,7 +16,7 @@ library(traveltime)
 
 ```
 
-The `get_traveltime` function allows to easily retrieve traveltime-isochrones via the Traveltime-API.
+The `traveltime_map` function allows to easily retrieve traveltime-isochrones via the Traveltime-API.
 
 ### querying the Traveltime-API with get_traveltime
 
@@ -29,7 +29,7 @@ The following transport modes are supported:
 # "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
 
 # how far can you go by public transport within 30 minutes?
-traveltime30 <- get_traveltime(appId="YourAppId",
+traveltime30 <- traveltime_map(appId="YourAppId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
                traveltime=1800,
