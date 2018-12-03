@@ -29,6 +29,7 @@ The following transport modes are supported:
 # "walking", "walking+coach", "walking_bus", "walking_ferry" or "walking_train".
 
 # how far can you go by public transport within 30 minutes?
+
 traveltime30 <- traveltime_map(appId="YourAppId",
                apiKey="YourAPIKey",
                location=c(47.378610,8.54000),
@@ -43,6 +44,16 @@ plot(traveltime30)
 # or on top of a leaflet-map with mapview
 
 mapview::mapview(traveltime30)
+
+
+# You can switch to arrival search (from how far is a location reachable within x min?) just by using the 'arrival' argument instead of 'departure'.
+
+traveltime30_arrival <- traveltime_map(appId="YourAppId",
+               apiKey="YourAPIKey",
+               location=c(47.378610,8.54000),
+               traveltime=1800,
+               type="public_transport",
+               arrival="YYYY-MM-DDT08:00:00Z")
 
 ```
 
