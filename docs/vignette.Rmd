@@ -1,5 +1,5 @@
 ---
-title: "traveltime - Wrapper for the Traveltime API for R"
+title: "traveltime - a Traveltime API Wrapper for R"
 output: 
   prettydoc::html_pretty:
     theme: cayman
