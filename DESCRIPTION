@@ -1,6 +1,6 @@
 Package: traveltime
 Type: Package
-Title: API Wrapper for the Traveltime Platform API 
+Title: a Traveltime API Wrapper for R
 Version: 0.0.2
 Author: Thomas Lo Russo
 Maintainer: Thomas Lo Russo <th.lorusso@gmail.com>
