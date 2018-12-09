@@ -13,17 +13,12 @@ filter_request <- function(appId = "yourAppId", apiKey = "yourApiKey", from = NU
 #   if (is.null(apiKey)) stop("apiKey is missing.", call. = FALSE)
 #   if (is.null(appId)) stop("appId is missing.", call. = FALSE)
 #   if (is.null(type)) stop("transport mode not defined - please choose a mode of transport", call. = FALSE)
-#
-#
+
+
 url <- "http://api.traveltimeapp.com/v4/time-filter"
-#
-#
 
 #
 #
-# locations <-list(c(47.378610,8.54000),c(47.378610,8.54000))
-#
-#', .[1],',
 
 #get length of destination list to assign ids
 ids <- c(1:length(to))
@@ -64,7 +59,7 @@ requestBody <-  paste0('{
                         ],
                         "departure_searches": [
                         {
-                        "id": "forward search example",
+                        "id": "r traveltime api wrapper",
                         "departure_location_id": "origin",
                         "arrival_location_ids": ["',
                         paste(dest_ids,collapse='","'),
@@ -97,14 +92,60 @@ filter_response <- httr::POST(url = url,
 
 #
 #
- # if (httr::http_type(response) != "application/json") {
- #
- #       stop("API did not return json", call. = FALSE)
- # }
+ if (httr::http_type(response) != "application/json") {
+
+       stop("API did not return json", call. = FALSE)
+ }
 #
+
 #   # extract content
-respo2 <- httr::content(filter_response)
+respo <- httr::content(filter_response)
+
+respo %>%
+  flatten() %>%
+  map("travel_time")
+
+
+
+
+map(respo, ~map(.x, "travel_time")) %>% pluck("properties")
+
+%>% flatten()
+
+
+modify_depth(respo$properties, 1, "travel_time")
+
 #
+respo <- purrr::flatten(what$results[[1]]$locations)
+
+respo$id
+
+
+
+
+rbind(respo$properties[[1]])
+
+
+
+do.call(rbind,what$results[[1]]$locations)
+
+map_dfr(c(1,2),what$results[[1]]$locations[[1]]$properties)
+
+do.call(c(1:2), rbind(what$results[[1]]$locations[[.]]$properties[[1]][[1]]))
+
+
+unlist(what$results[[1]]$locations)
+
+respo
+
+response <- tibble::tibble(
+  name = purrr::map_chr(respo, "travel_time"),
+  id = purrr::map_chr(respo, "id")
+)
+
+purrr::map_chr(respo, "id")
+
+
 
    # )
  }
