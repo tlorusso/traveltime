@@ -37,13 +37,13 @@ to_list <<- purrr::map2(to,ids,~paste0('
                         }
                         }'))
 
-locations_body <-paste(to_list, collapse=', ' )
+locations_body <<- paste(to_list, collapse=', ' )
 
 
 requestBody <<-  paste0('{
                         "locations": [
                         {
-                        "id": "destination",
+                        "id": "origin",
                         "coords": {
                         "lat":', from[1],',
                         "lng":', from[2],'
@@ -55,9 +55,9 @@ requestBody <<-  paste0('{
                         {
                         "id": "forward search example",
                         "departure_location_id": "origin",
-                        "arrival_location_ids": [',
-                        paste(ids,collapse='", "'),
-                        '],
+                        "arrival_location_ids": ["',
+                        paste(ids,collapse='","'),
+                        '"],
                         "transportation": {
                         "type": "bus"
                         },
@@ -71,25 +71,6 @@ requestBody <<-  paste0('{
                         "max_results": 3,
                         "width": 600
                         }
-                        }
-                        ],
-                        "arrival_searches": [
-                        {
-                        "id": "backward search example",
-                        "departure_location_id": [
-                        "destination"
-                        ],
-                        "arrival_location_ids":',paste(ids,collapse='", "'),',
-                        "transportation": {
-                        "type": "public_transport"
-                        },
-                        "arrival_time": "2018-11-15T08:00:00Z",
-                        "travel_time": 1900,
-                        "properties": [
-                        "travel_time",
-                        "distance",
-                        "distance_breakdown"
-                        ]
                         }
                         ]
                         }')
