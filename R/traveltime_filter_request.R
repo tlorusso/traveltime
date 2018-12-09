@@ -25,22 +25,33 @@ url <- "http://api.traveltimeapp.com/v4/time-filter"
 #
 #', .[1],',
 
+#get length of destination list to assign ids
+ids <- c(1:length(to))
 
-ids <-paste0("destination",c(1:length(to)))
+# compose matching strings for request body: "destination_x"
+dest_ids <-paste0("destination_",ids)
 
-to_list <<- purrr::map2(to,ids,~paste0('
+to_list <- purrr::map(ids,~paste0('
                       {
-                        "id": "',ids,'",
+                        "id": "destination_',.,'",
                         "coords": {
-                        "lat": ', .[1],',
-                        "lng": ', .[2],'
+                        "lat": ', to[[.]][1],',
+                        "lng": ', to[[.]][2],'
                         }
                         }'))
 
-locations_body <<- paste(to_list, collapse=', ' )
 
+locations_body <- paste0(to_list, collapse=', ' )
 
-requestBody <<-  paste0('{
+# as.character(unlist(to_list))
+#
+# as.character(to_list)
+#
+# to_list
+
+# as.character(locations_body)
+
+requestBody <-  paste0('{
                         "locations": [
                         {
                         "id": "origin",
@@ -56,7 +67,7 @@ requestBody <<-  paste0('{
                         "id": "forward search example",
                         "departure_location_id": "origin",
                         "arrival_location_ids": ["',
-                        paste(ids,collapse='","'),
+                        paste(dest_ids,collapse='","'),
                         '"],
                         "transportation": {
                         "type": "bus"
@@ -75,7 +86,7 @@ requestBody <<-  paste0('{
                         ]
                         }')
 #
-response_filter <- httr::POST(url = url,
+filter_response <- httr::POST(url = url,
                      httr::add_headers('Content-Type' = 'application/json'),
                      httr::add_headers('Accept' = 'application/json'),
                      httr::add_headers('X-Application-Id' = appId),
@@ -92,7 +103,7 @@ response_filter <- httr::POST(url = url,
  # }
 #
 #   # extract content
-  # respo2 <-httr::content(response2)
+respo2 <- httr::content(filter_response)
 #
 
    # )
