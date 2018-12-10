@@ -57,7 +57,9 @@ traveltime30_arrival <- traveltime_map(appId="YourAppId",
 
 ```
 
-Some first examples of how to use the API-Wrapper and what can be done with the data are available in the vignette:
+Some examples of how to use the API-Wrapper and what can be done with the data are available in the vignette:
 
 https://tlorusso.github.io/traveltime/vignette.html
+
+In the upcoming version, further API-Modules will be supported.
 
