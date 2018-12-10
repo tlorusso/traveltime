@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/tlorusso/traveltime.svg?branch=dev)](https://travis-ci.org/tlorusso/traveltime)
+[![Build Status](https://travis-ci.org/tlorusso/traveltime.svg?branch=master)](https://travis-ci.org/tlorusso/traveltime)
 
 ## traveltime - a Traveltime API Wrapper for R
 
