@@ -101,14 +101,16 @@ filter_response <- httr::POST(url = url,
 #   # extract content
 respo <- httr::content(filter_response)
 
-respo %>%
-  flatten() %>%
-  map("travel_time")
+respo <- purrr::flatten(what$results[[1]]$locations)
 
 
 
 
-map(respo, ~map(.x, "travel_time")) %>% pluck("properties")
+
+
+map(respo, ~map(.x, "travel_time"))
+
+
 
 %>% flatten()
 
