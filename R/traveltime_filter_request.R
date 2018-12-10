@@ -1,18 +1,18 @@
-#' #' API Wrapper for the Traveltime API - helper function
+#' #' API Wrapper for the Traveltime API
 #' #'
-#' #' traveltime_request calls the api and converts the response to an sf object
+#' #' traveltime_filter calls the traveltime-filter API module to calculate traveltime between coordinates
 #' #'
 #' #' @importFrom httr POST
 #' #' @noRd
 #'
-filter_request <- function(appId = "yourAppId", apiKey = "yourApiKey", from = NULL, to = NULL , traveltime = NULL, type = NULL, departure = NULL){
+traveltime_filter <- function(appId = "yourAppId", apiKey = "yourApiKey", from = NULL, to = NULL , traveltime = NULL, type = NULL, departure = NULL){
 #
 #   #checks : missing parameters?
-#   if (length(location)!=2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
+  if (length(location)<2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
 #   if (is.null(traveltime)) stop("traveltime missing - set traveltime (in seconds)", call. = FALSE)
-#   if (is.null(apiKey)) stop("apiKey is missing.", call. = FALSE)
-#   if (is.null(appId)) stop("appId is missing.", call. = FALSE)
-#   if (is.null(type)) stop("transport mode not defined - please choose a mode of transport", call. = FALSE)
+  if (is.null(apiKey)) stop("apiKey is missing.", call. = FALSE)
+  if (is.null(appId)) stop("appId is missing.", call. = FALSE)
+  if (is.null(type)) stop("transport mode not defined - please choose a mode of transport", call. = FALSE)
 
 
 url <- "http://api.traveltimeapp.com/v4/time-filter"
@@ -92,62 +92,29 @@ filter_response <- httr::POST(url = url,
 
 #
 #
- if (httr::http_type(response) != "application/json") {
+ if (httr::http_type(filter_response) != "application/json") {
 
        stop("API did not return json", call. = FALSE)
  }
-#
-
-#   # extract content
-respo <- httr::content(filter_response)
-
-respo <- purrr::flatten(what$results[[1]]$locations)
 
 
 
+respo2 <- httr::content(filter_response)
 
-
-
-map(respo, ~map(.x, "travel_time"))
-
-
-
-%>% flatten()
-
-
-modify_depth(respo$properties, 1, "travel_time")
-
-#
-respo <- purrr::flatten(what$results[[1]]$locations)
-
-respo$id
-
-
-
-
-rbind(respo$properties[[1]])
-
-
-
-do.call(rbind,what$results[[1]]$locations)
-
-map_dfr(c(1,2),what$results[[1]]$locations[[1]]$properties)
-
-do.call(c(1:2), rbind(what$results[[1]]$locations[[.]]$properties[[1]][[1]]))
-
-
-unlist(what$results[[1]]$locations)
-
-respo
+number_of_destinations <- length(respo2$results[[1]]$locations)
 
 response <- tibble::tibble(
-  name = purrr::map_chr(respo, "travel_time"),
-  id = purrr::map_chr(respo, "id")
+  from = list(from),
+  to = to,
+  traveltime = c(1:number_of_destinations) %>% map_dbl(~respo2$results[[1]]$locations[[.]][2]$properties[[1]]$travel_time),
+  type=type,
+  departure=departure
 )
 
-purrr::map_chr(respo, "id")
+
+
+return(response)
 
 
 
-   # )
  }
