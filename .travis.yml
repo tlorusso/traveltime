@@ -9,6 +9,11 @@ dist: trusty
 cache: packages
 latex: false
 
+# safelist
+branches:
+  only:
+  - master
+
 # gdal
 addons:
   apt:
