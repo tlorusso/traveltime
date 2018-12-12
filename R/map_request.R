@@ -55,9 +55,6 @@ map_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = N
   # extract content
   respo <-httr::content(response)
 
-  respo <<- respo
-
-
   # the shapes list contains all the polygons - convert to data.frame
 
 flat <- c(1:length(respo$results[[1]]$shapes)) %>%
