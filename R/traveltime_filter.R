@@ -5,10 +5,10 @@
 #' #' @importFrom httr POST
 #' #' @noRd
 #'
-traveltime_filter <- function(appId = "yourAppId", apiKey = "yourApiKey", from = NULL, to = NULL , traveltime = NULL, type = NULL, departure = NULL){
+traveltime_filter <- function(appId = "yourAppId", apiKey = "yourApiKey", from = NULL, to = NULL , traveltime = 14400, type = NULL, departure = NULL){
 #
 #   #checks : missing parameters?
-  if (length(location)<2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
+  if (length(to)<2) stop("vector of longitude / latitude coordinates missing", call. = FALSE)
 #   if (is.null(traveltime)) stop("traveltime missing - set traveltime (in seconds)", call. = FALSE)
   if (is.null(apiKey)) stop("apiKey is missing.", call. = FALSE)
   if (is.null(appId)) stop("appId is missing.", call. = FALSE)
@@ -68,7 +68,7 @@ requestBody <-  paste0('{
                         "type": "bus"
                         },
                         "departure_time": "2018-11-15T08:00:00Z",
-                        "travel_time": 14400,
+                        "travel_time": ',traveltime,',
                         "properties": [
                         "travel_time"
                         ],
@@ -90,31 +90,39 @@ filter_response <- httr::POST(url = url,
                      encode = "json")
 
 
-#
-#
  if (httr::http_type(filter_response) != "application/json") {
 
        stop("API did not return json", call. = FALSE)
  }
 
+# error handling! -> based on status codes
+message(filter_response$status_code)
 
 
 respo2 <- httr::content(filter_response)
 
 number_of_destinations <- length(respo2$results[[1]]$locations)
 
-response <- tibble::tibble(
-  from = list(from),
-  to = to,
-  traveltime = c(1:number_of_destinations) %>% map_dbl(~respo2$results[[1]]$locations[[.]][2]$properties[[1]]$travel_time),
-  type=type,
-  departure=departure
-)
 
+        response <- tibble::tibble(
+          from = list(from),
+          to = to,
+          traveltime = c(1:length(respo2$results[[1]]$locations)) %>% purrr::map_dbl(~respo2$results[[1]]$locations[[.]][2]$properties[[1]]$travel_time),
+          type=type,
+          departure=departure,
+          id=dest_ids
+          )
+
+
+        response <- response %>%
+          dplyr::mutate(reachable=ifelse(id %in% map_chr(respo2$results[[1]]$unreachable,1),"not reachable","reachable"),
+                        traveltime=ifelse(id %in% map_chr(respo2$results[[1]]$unreachable,1),NA,traveltime))
 
 
 return(response)
 
+#
+# }
 
+}
 
- }
