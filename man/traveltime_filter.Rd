@@ -40,14 +40,14 @@ To call the API via the package you need to get an api-key here \url{http://docs
 \examples{
  \donttest{
  #list of destinations
-locations <-list(c(47.378610,8.54000),c(47.578620,8.54000))
+locations <-list(c(47.40889,8.54466),c(47.578620,8.54000))
 
 traveltimes <- traveltime_filter(appId="YourAppId",
                             apiKey="YourApiKey",
                             from = c(47.578610,8.54000),
                             to = locations ,
-                            traveltime=2000,
-                            departure="2018-12-06T08:00:00Z")
+                            traveltime=14400,
+                            departure="2019-09-06T08:00:00Z")
 
 #plot the isochrones
 glimpse(traveltimes)

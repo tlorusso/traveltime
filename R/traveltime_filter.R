@@ -25,15 +25,15 @@
 #' @examples
 #'  \donttest{
 #'  #list of destinations
-#'locations <-list(c(47.378610,8.54000),c(47.578620,8.54000))
+#' locations <-list(c(47.40889,8.54466),c(47.578620,8.54000))
 #'
-#' traveltimes <- traveltime_filter(appId="YourAppId",
-#'                             apiKey="YourApiKey",
-#'                             from = c(47.578610,8.54000),
-#'                             to = locations ,
-#'                             traveltime=2000,
-#                              type="public_transport",
-#'                             departure="2018-12-06T08:00:00Z")
+#' traveltimes <- traveltime_filter(appId=appId,
+#'                                apiKey=apiKey,
+#'                                from = c(47.37810,8.53936),
+#'                                to = locations ,
+#'                                traveltime=14400,
+#'                                 type="public_transport",
+#'                                departure="2019-09-06T08:00:00Z")
 #'
 #' #plot the isochrones
 #' glimpse(traveltimes)
@@ -42,6 +42,8 @@
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 #' @export
 #'
+
+
 traveltime_filter <- function(appId = "yourAppId", apiKey = "yourApiKey", from = NULL, to = NULL , traveltime = 14400, type = NULL, departure = NULL){
 
 #   #checks : missing parameters?
@@ -54,8 +56,6 @@ traveltime_filter <- function(appId = "yourAppId", apiKey = "yourApiKey", from =
 
 url <- "http://api.traveltimeapp.com/v4/time-filter"
 
-#
-#
 
 #get length of destination list to assign ids
 ids <- c(1:length(to))
@@ -102,21 +102,25 @@ requestBody <-  paste0('{
                         paste(dest_ids,collapse='","'),
                         '"],
                         "transportation": {
-                        "type": "bus"
+                        "type":  "',type,'"
                         },
-                        "departure_time": "2018-11-15T08:00:00Z",
+                        "departure_time": "',departure,'",
                         "travel_time": ',traveltime,',
                         "properties": [
                         "travel_time"
-                        ],
-                        "range": {
-                        "enabled": true,
-                        "max_results": 3,
-                        "width": 600
-                        }
+                        ]
+
                         }
                         ]
                         }')
+
+# "travel_time"
+# ],
+# "range": {
+# "enabled": true,
+# "max_results": 3,
+# "width": 600
+# }
 #
 filter_response <- httr::POST(url = url,
                      httr::add_headers('Content-Type' = 'application/json'),
@@ -132,11 +136,15 @@ filter_response <- httr::POST(url = url,
        stop("API did not return json", call. = FALSE)
  }
 
-# error handling! -> based on status codes
-message(filter_response$status_code)
-
 
 respo2 <- httr::content(filter_response)
+
+# error handling! -> based on status codes
+if(filter_response$status_code!=200){
+
+message(paste0(filter_response$status_code," : ",respo2$description))
+
+}
 
 number_of_destinations <- length(respo2$results[[1]]$locations)
 
@@ -152,8 +160,8 @@ number_of_destinations <- length(respo2$results[[1]]$locations)
 
 
         response <- response %>%
-          dplyr::mutate(reachable=ifelse(id %in% map_chr(respo2$results[[1]]$unreachable,1),"not reachable","reachable"),
-                        traveltime=ifelse(id %in% map_chr(respo2$results[[1]]$unreachable,1),NA,traveltime))
+          dplyr::mutate(reachable=ifelse(id %in% purrr::map_chr(respo2$results[[1]]$unreachable,1),"not reachable","reachable"),
+                        traveltime=ifelse(id %in% purrr::map_chr(respo2$results[[1]]$unreachable,1),NA,traveltime))
 
 
 return(response)
