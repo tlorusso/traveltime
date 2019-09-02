@@ -1,8 +1,8 @@
 #' Calculate traveltime between locations
 #'
-#' \code{traveltime_filter} is the main function of the traveltimeR package. It retrieves traveltime-isochrones from the traveltime platform, which supports several modes of transport in several countries and brings them into r as polygons stored in sf-objects.
+#' \code{traveltime_filter} Calculate traveltime between locations. Returns ....
 #'
-#'   traveltime_filter - retrieve isochrones for traveltimemaps from Traveltime API
+#'   traveltime_filter - retrieve traveltimes for a pair of locations
 #'
 #' @param appId Traveltime-Plattform Application ID
 #' @param apiKey Traveltime-Plattform API-Key
