@@ -6,7 +6,7 @@ The traveltime-package allows to retrieve isochrones for traveltime-maps from th
 
 __GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-keys/
 
-For non-commercial use the usage of the API is free up to 10'000 queries a month (max 30 queries per min). For commercial use (e.g. to integrate the API into a website) a license is needed. 
+For non-commercial use the usage of the API is free for a restricted period of 10 days and can be granted for longer periods upon request.
 
 You can install the traveltime-package with devtools or remotes from Github. 
 ```
