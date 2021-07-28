@@ -28,6 +28,7 @@ traveltime_geocode <- function(appId = "yourAppId", apiKey = "yourApiKey", addre
       httr::add_headers("X-Application-Id"= tt_appid, "X-Api-Key"= tt_appkey),
     query = list(query=address, within_country="United States"))
   # return the json response as text
-  return(httr::content(req))
+  con <- httr::content(req)
+  return(sf::st_read(con))
 
 }
