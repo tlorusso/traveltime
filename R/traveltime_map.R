@@ -1,8 +1,8 @@
-#' API Wrapper for the Traveltime API
+#' Retrieve traveltime isochrones
 #'
-#' \code{get_traveltime} is the main function of the traveltimeR package. It retrieves traveltime-isochrones from the traveltime platform, which supports several modes of transport in several countries and brings them into r as polygons stored in sf-objects.
+#' \code{traveltime_map} is the main function of the traveltimeR package. It retrieves traveltime-isochrones from the traveltime platform, which supports several modes of transport in several countries and brings them into r as polygons stored in sf-objects.
 #'
-#'   get_traveltime - retrieve isochrones for traveltimemaps from Traveltime API
+#'   traveltime_map - retrieve isochrones for traveltimemaps from Traveltime API
 #'
 #' @param appId Traveltime-Plattform Application ID
 #' @param apiKey Traveltime-Plattform API-Key

@@ -9,7 +9,7 @@
 #'
 #' @param address A character vector of length one containing the address query.
 #'
-#' @inheritParams
+#' @inheritParams traveltime_map
 #' @examples
 #' \dontrun{
 #' whiteHouse <- c("1600 Pennsylvania Avenue NW, Washington, DC, 20500, United States", "The White House")
@@ -19,7 +19,6 @@
 #'
 #' # loop over a list of addresses
 #' lapply(whiteHouse, traveltime_geocode)
-#'
 #'
 #' }
 #' @export
