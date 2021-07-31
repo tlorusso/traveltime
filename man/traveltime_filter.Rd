@@ -4,9 +4,15 @@
 \alias{traveltime_filter}
 \title{Calculate traveltime between locations}
 \usage{
-traveltime_filter(appId = "yourAppId", apiKey = "yourApiKey",
-  from = NULL, to = NULL, traveltime = 14400, type = NULL,
-  departure = NULL)
+traveltime_filter(
+  appId = "yourAppId",
+  apiKey = "yourApiKey",
+  from = NULL,
+  to = NULL,
+  traveltime = 14400,
+  type = NULL,
+  departure = NULL
+)
 }
 \arguments{
 \item{appId}{Traveltime-Plattform Application ID}
@@ -42,12 +48,13 @@ To call the API via the package you need to get an api-key here \url{http://docs
  #list of destinations
 locations <-list(c(47.40889,8.54466),c(47.578620,8.54000))
 
-traveltimes <- traveltime_filter(appId="YourAppId",
-                            apiKey="YourApiKey",
-                            from = c(47.578610,8.54000),
-                            to = locations ,
-                            traveltime=14400,
-                            departure="2019-09-06T08:00:00Z")
+traveltimes <- traveltime_filter(appId=appId,
+                               apiKey=apiKey,
+                               from = c(47.37810,8.53936),
+                               to = locations ,
+                               traveltime=14400,
+                                type="public_transport",
+                               departure="2019-09-06T08:00:00Z")
 
 #plot the isochrones
 glimpse(traveltimes)

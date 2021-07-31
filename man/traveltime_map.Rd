@@ -4,9 +4,15 @@
 \alias{traveltime_map}
 \title{Retrieve traveltime isochrones}
 \usage{
-traveltime_map(appId = "yourAppId", apiKey = "yourApiKey",
-  location = NULL, traveltime = NULL, type = NULL,
-  departure = NULL, arrival = NULL, holes = FALSE)
+traveltime_map(
+  appId = "yourAppId",
+  apiKey = "yourApiKey",
+  location = NULL,
+  traveltime = NULL,
+  type = NULL,
+  departure = NULL,
+  arrival = NULL
+)
 }
 \arguments{
 \item{appId}{Traveltime-Plattform Application ID}
@@ -22,8 +28,6 @@ traveltime_map(appId = "yourAppId", apiKey = "yourApiKey",
 \item{departure}{time of departure, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"}
 
 \item{arrival}{time of arrival, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"}
-
-\item{holes}{defaults to FALSE. If set TRUE, holes are integrated into the isochrones.}
 }
 \value{
 the results from the search

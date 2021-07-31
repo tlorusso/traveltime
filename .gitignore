@@ -1,4 +1,9 @@
-.Rproj.user
+.Rproj.user/
 .Rhistory
+*.Rproj
+
 .RData
 .Ruserdata
+^.*\.Rproj$
+^\.Rproj\.user$
+.Rproj.user

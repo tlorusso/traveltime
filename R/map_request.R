@@ -55,29 +55,10 @@ map_request <- function(appId = "yourAppId", apiKey = "yourApiKey", location = N
   # extract content
   respo <-httr::content(response)
 
-  respo <<- respo
-
-
   # the shapes list contains all the polygons - convert to data.frame
 
 flat <- c(1:length(respo$results[[1]]$shapes)) %>%
     purrr::map_dfr(., ~dplyr::bind_rows(respo$results[[1]]$shapes[[.x]]$shell),.id="group")
-
-# if(isTRUE(holes)){
-
-#  the same as shell only?
-#
-# holesdf <<- purrr::map(respo[1]$results[[1]]$shapes, "holes")%>%
-#                 Filter(function(x) length(x) > 0, .) %>%
-#                 purrr::map_dfr(purrr::flatten_df,.id="group")
-#
-# holesdf <<-sf::st_as_sf(x = flat,
-#                coords = c("lng", "lat"),
-#                crs = "+proj=longlat +datum=WGS84")
-#
-#
-#  }
-
 
   if (ncol(flat)!=3) {
     stop("request did not deliver isochrone coordinates - please check appId / apiKey and / or if the coordinates lie in a supported country. Also, departure time must lie in the future.", call. = FALSE)
@@ -88,11 +69,5 @@ flat <- c(1:length(respo$results[[1]]$shapes)) %>%
   sf::st_as_sf(x = flat,
                  coords = c("lng", "lat"),
                  crs = "+proj=longlat +datum=WGS84")
-
-  # how to pass to pass holes to parent environement?
-  # sf::st_as_sf(x = holes,
-  #              coords = c("lng", "lat"),
-  #              crs = "+proj=longlat +datum=WGS84")
-
 
 }

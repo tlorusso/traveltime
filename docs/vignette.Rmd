@@ -1,5 +1,5 @@
 ---
-title: "traveltime - API Wrapper for the Traveltime API"
+title: "traveltime - a Traveltime API Wrapper for R"
 output: 
   prettydoc::html_pretty:
     theme: cayman
@@ -11,7 +11,7 @@ output:
 
 The traveltime-package allows to retrieve isochrones for traveltime-maps from the Traveltime Platform API directly from R. The isochrones are stored as sf-objects, ready for visualization or further processing. The isochrones display how far you can travel from a certain location within a given timeframe. Numerous modes of transport are supported.
 
-https://api.traveltimeapp.com/
+http://docs.traveltimeplatform.com/overview/introduction
 
 __GET an API-KEY__ here: http://docs.traveltimeplatform.com/overview/getting-keys/
 
@@ -29,7 +29,7 @@ pacman::p_load(dplyr, purrr, sf, mapview, traveltime)
 
 You can easily retrieve the isochrones with the `traveltime_map` function. Find a list of supported countries here: http://docs.traveltimeplatform.com/overview/supported-countries/
 
-# Querying the Traveltime-API with get_traveltime
+# Querying the Traveltime-API with traveltime_map
 ```{r, echo=TRUE, eval=FALSE}
 # retrieve data via request 
 
@@ -56,11 +56,27 @@ traveltime60 <- traveltime_map(appId="YourAppId",
 
 ```
 
+If you are interested in the opposite (from how far is location y reachable within x minutes) just use the  `arrival` argument instead of `departure`.
 ```{r, echo=FALSE, eval=TRUE}
 traveltime30 <- readRDS("traveltime30.RDS")
 traveltime60 <- readRDS("traveltime60.RDS")
 traveltimes <- readRDS("traveltimes.RDS")
 ```
+
+The result of the `traveltime_map`-query: an sf-dataframe containing the traveltime-multipolygon as well as the request-parameters.
+```{r,eval=FALSE}
+traveltime30
+
+Simple feature collection with 1 feature and 6 fields
+geometry type:  MULTIPOLYGON
+dimension:      XY
+bbox:           xmin: 8.049057 ymin: 47.16921 xmax: 8.823337 ymax: 47.52982
+epsg (SRID):    4326
+proj4string:    +proj=longlat +datum=WGS84 +no_defs
+       lat  lng traveltime             type            departure arrival                       geometry
+1 47.37861 8.54       1800 public_transport 2018-12-06T08:00:00Z      NA MULTIPOLYGON (((8.049506 47...
+```
+
 
 # Taking a glimpse at the isochrones (mapview)
 
@@ -97,7 +113,7 @@ traveltimes <-c("walking","cycling","driving","public_transport") %>%
 # map_dfr does not work well with sf objects (yet?) so we just..
 
 # ... rbind the dataframes toghether via do.call
-traveltimes <- do.call(rbind,traveltimes)
+df<-do.call(rbind.data.frame, traveltimes)
 ```
 
 
@@ -147,16 +163,11 @@ traveltimes <- c("2018-11-12T07:00:00+01:00","2018-11-12T23:00:00+01:00") %>%
 
 animationdf <-do.call(rbind, traveltimes)
 
-# create a group variable based on the area of the polygons in order to assure a smooth transformation
-df <- animationdf %>% group_by(as.factor(time))%>% 
-                      mutate(group=dense_rank(st_area(geometry)))
 ```
 
 ```{r,echo=FALSE, message=F, warning=F}
 animationdf <- readRDS("animation.RDS")
 
-df <- animationdf %>% group_by(time)%>% 
-                      mutate(group=dense_rank(st_area(geometry)))
 ```
 
 Just with a few lines of extra code we can turn a static map into an animated one with gganimate!
@@ -166,12 +177,12 @@ basemap <- get_stamenmap(bbox = unname(st_bbox(animationdf)),maptype = "toner-hy
 
 #just a few lines to trigger gganimate!
 animation <- ggmap(basemap)+
-  geom_sf(data = df, aes(group=group,fill=time),inherit.aes = FALSE, alpha=0.4, colour=NA)  +
+  geom_sf(data = animationdf, aes(group=type,fill=departure),inherit.aes = FALSE, alpha=0.4, colour=NA)  +
   theme_void()+
   theme(plot.title=element_text(face="bold"),
         plot.subtitle=element_text(size = 13, margin=margin(t=5, b = 10)))+
   coord_sf(datum = NA)+
-  transition_states(time, 2, 1)+
+  transition_states(state, 2, 1)+
   scale_fill_manual(name="Departure time", values = c("steelblue", "darkblue"))+
   labs(title = 'How far can you drive within half an hour from Zurich mainstation?', subtitle='Departure : {closest_state}',caption="data : traveltimeplatform.com")
 
@@ -182,7 +193,6 @@ animation
 
 ```
 ![](traveltime.gif)
-
 
 
 

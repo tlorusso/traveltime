@@ -11,7 +11,6 @@
 #' @param type transportation mode
 #' @param departure time of departure, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"
 #' @param arrival time of arrival, date in extended ISO-8601 format (incl. timezone), example: "2018-08-05T08:00:00Z"
-#' @param holes defaults to FALSE. If set TRUE, holes are integrated into the isochrones.
 #' @importFrom sf st_as_sf
 #' @importFrom purrr map_dfr
 #' @importFrom dplyr bind_cols
@@ -38,33 +37,14 @@
 #' @references \href{http://docs.traveltimeplatform.com/overview/introduction}{Traveltime Plattform API Docs}
 #' @export
 
-traveltime_map <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL,holes=FALSE){
+traveltime_map <- function(appId = "yourAppId", apiKey = "yourApiKey", location = NULL, traveltime = NULL, type = NULL, departure = NULL,arrival=NULL){
 
-traveltimelist <- map_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival,holes=holes)
-
-# splitlist <-traveltimelist %>%
-#   split(.$group)
-#
-# polygonslist <- splitlist %>%
-#   purrr::map(~make_polygons(.))
-#
-# do.call(rbind, polygonslist) %>%
-#   sf::st_combine() %>%
-#   sf::st_sf(traveltime=traveltime, geometry = .)
+traveltimelist <- map_request(appId=appId,apiKey=apiKey,location=location,traveltime=traveltime,type=type,departure=departure,arrival=arrival)
 
 make_polygons(traveltimelist) %>%
   sf::st_combine() %>%
   sf::st_sf(geometry=.) %>%
-  dplyr::mutate(lat=location[1],lng=location[2],traveltime=traveltime,type=type,departure=ifelse(!is.null(departure),departure,NA),arrival=ifelse(!is.null(arrival),departure,NA))
+  dplyr::mutate(lat=location[1],lng=location[2],traveltime=traveltime,type=type,departure=ifelse(!is.null(departure),departure,NA),arrival=ifelse(!is.null(arrival),arrival,NA))
 
-# if(isTRUE(holes)){
-#
-#   #do the same for standard?
-# holeslist <- make_polygons(holesdf) %>%
-#               sf::st_combine() %>%
-#               sf::st_sf(traveltime="traveltime",geometry=.)
-#
-#
-# }
 
 }
